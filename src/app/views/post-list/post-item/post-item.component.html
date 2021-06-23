@@ -1,0 +1,45 @@
+<div class="timeline-header">
+  <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
+  <span class="username">{{ userName }}</span>
+</div>
+<div class="timeline-content">
+  <br />
+  <strong>{{ post.title }}</strong>
+  <br />
+  <p>
+    {{ post.body }}
+  </p>
+</div>
+<div class="timeline-footer">
+  <a (click)="loadComments()" class="m-r-15 text-inverse-lighter"
+    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Kommentek</a
+  >
+</div>
+
+<div class="comments" *ngIf="showComments">
+  <div class="col-12 mt-3">
+    <app-comment-list [postId]="post.id"></app-comment-list>
+  </div>
+</div>
+
+<div class="timeline-comment-box" *ngIf="showComments">
+  <div class="user">
+    <img src="assets/img/user.png" />
+  </div>
+  <div class="input">
+    <form action="">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control rounded-corner"
+          placeholder="Komment írása..."
+        />
+        <span class="input-group-btn p-l-10">
+          <button class="btn btn-primary f-s-12 rounded-corner" type="button">
+            <i class="bi bi-check2"></i>
+          </button>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

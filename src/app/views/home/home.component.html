@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card mt-3 p-5 shadow rounded">
+      <div class="card-body text-center">
+        <img
+          class="img-fluid"
+          src="assets/img/logo.png"
+          width="250px"
+          alt="logo"
+        />
+        <p *ngIf="!loggedIn" class="mt-5 fade-in">
+          <strong
+            >Üdvözöllek a Blogtoday oldalán, ha kommentelni szeretnél kérlek
+            <a (click)="login()"
+              ><i><u>jelentkezz be</u></i></a
+            >!</strong
+          >
+        </p>
+        <h1 *ngIf="loggedIn" class="mt-5 fade-in">
+          Üdvözöllek, {{ username }}!
+        </h1>
+      </div>
+    </div>
+    <div class="card mt-3 p-4 shadow rounded">
+      <div class="card-body text-justify fade-in">
+        <h5>
+          Érdekel mások véleménye? Szeretnél megosztani valami igzalmasat, netán
+          valami megosztót? A
+          <i>Blogtoday</i>en bármikor létrehozhatod saját bejegyzésedet,
+          kommentelszetsz másoknál, vagy elolvashatod más emberek észrevételeit
+          a posztod alatt. <br /><br />
+          Csak nézelődnél?
+          <a routerLink="/posts" s><i>Kattints ide</i></a>
+          és máris felfedezheted a legnépszerűbb témákat.
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>

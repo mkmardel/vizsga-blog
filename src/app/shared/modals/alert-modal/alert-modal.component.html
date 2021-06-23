@@ -1,0 +1,96 @@
+<div
+  class="modal fade"
+  id="alertModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="alertModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <div class="flex-row flex-wrap">
+            <!-- ***** ICONS ***** -->
+            <!-- SUCCESS -->
+            <div
+              *ngIf="role == 'success'"
+              class="swal2-icon swal2-success swal2-animate-success-icon"
+              style="display: flex"
+            >
+              <div
+                class="swal2-success-circular-line-left"
+                style="background-color: rgb(255, 255, 255)"
+              ></div>
+              <span class="swal2-success-line-tip"></span>
+              <span class="swal2-success-line-long"></span>
+              <div class="swal2-success-ring"></div>
+              <div
+                class="swal2-success-fix"
+                style="background-color: rgb(255, 255, 255)"
+              ></div>
+              <div
+                class="swal2-success-circular-line-right"
+                style="background-color: rgb(255, 255, 255)"
+              ></div>
+            </div>
+            <!-- ERROR -->
+            <div *ngIf="role == 'error'" class="flex-row flex-wrap">
+              <div
+                class="swal2-icon swal2-error swal2-animate-error-icon"
+                style="display: flex"
+              >
+                <span class="swal2-x-mark"
+                  ><span class="swal2-x-mark-line-left"></span
+                  ><span class="swal2-x-mark-line-right"></span
+                ></span>
+              </div>
+            </div>
+            <!-- CONFIRM -->
+            <div *ngIf="role == 'confirm'" class="flex-row flex-wrap">
+              <div class="mt-3 mb-4 text-center blink-v">
+                <img src="assets/img/qmark.png" />
+              </div>
+            </div>
+            <!-- ***** END OF ICONS ***** -->
+            <!-- ***** TEXT ***** -->
+            <div class="text-center px-4 pb-3 w-100" style="margin-top: -5px">
+              {{ alertText }}
+            </div>
+            <!-- ***** END OF TEXT ***** -->
+            <!-- ***** BUTTONS ***** -->
+            <button
+              *ngIf="role == 'success' || role == 'error'"
+              type="submit"
+              (click)="close()"
+              [class.btn-success]="role == 'success'"
+              [class.btn-secondary]="role == 'error'"
+              class="btn btn-block btn-round w-100 mt-2"
+            >
+              <strong>OK</strong>
+            </button>
+            <div *ngIf="role == 'confirm'" class="text-center mt-2 w-100">
+              <button
+                type="submit"
+                (click)="yes()"
+                class="btn btn-danger"
+                style="width: 45%"
+              >
+                <strong>Igen</strong></button
+              >&nbsp;
+              <button
+                type="submit"
+                (click)="close()"
+                class="btn btn-secondary"
+                style="width: 45%"
+              >
+                <strong>Nem</strong>
+              </button>
+              <!-- ***** END OF BUTTONS ***** -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

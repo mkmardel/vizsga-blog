@@ -1,0 +1,7 @@
+<hr />
+<button *ngIf="isAdmin" class="btn btn-danger">
+  <i class="bi bi-trash btn-sm"></i>
+</button>
+<img src="assets/img/comment.png" alt="comment" style="margin: 0 10px 0 5px" />
+<strong>{{ comment.name }}</strong> ({{ comment.email }}) <br />
+{{ comment.body }}
