@@ -13,11 +13,11 @@ const API_URL = Constants.BASE_API_URL;
 })
 export class PostService {
   private _posts: Post[];
-  public postsChanged: Subject<Post[]>;
+  public postsChanged$: Subject<Post[]>;
 
   constructor(private http: HttpClient, private modalService: ModalService) {
     this._posts = [];
-    this.postsChanged = new Subject<Post[]>();
+    this.postsChanged$ = new Subject<Post[]>();
   }
 
   get posts() {
@@ -25,10 +25,11 @@ export class PostService {
   }
 
   fetchPosts() {
+    this.modalService.showLoadingModal(true, 'Posztok betöltése...');
     return this.http.get<Post[]>(`${API_URL}/posts`).pipe(
       tap((posts) => {
         this._posts = posts;
-        this.postsChanged.next(this.posts);
+        this.postsChanged$.next(this.posts);
       })
     );
   }

@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.modalService.loginModalSubject.next({ open: true });
+    this.modalService.loginModalSubject$.next({ open: true });
   }
 
   ngOnDestroy(): void {

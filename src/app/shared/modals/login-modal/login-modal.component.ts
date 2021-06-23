@@ -46,14 +46,6 @@ export class LoginModalComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  showAlertModal(text: string, additional: string, role: string) {
-    this.modalService.alertModalSubject.next({
-      title: text,
-      additional: additional,
-      role: role,
-    });
-  }
-
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -71,7 +63,7 @@ export class LoginModalComponent implements OnInit {
           (res) => {
             this.isLoading = false;
             if (!res) {
-              this.showAlertModal(
+              this.modalService.showAlertModal(
                 'A megadott jelszó helytelen.',
                 null,
                 'error'
@@ -83,7 +75,7 @@ export class LoginModalComponent implements OnInit {
           },
           (err) => {
             this.isLoading = false;
-            this.showAlertModal(err.message, null, 'error');
+            this.modalService.showAlertModal(err.message, null, 'error');
           }
         );
     }

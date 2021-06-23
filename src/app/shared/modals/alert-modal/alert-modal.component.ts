@@ -28,7 +28,7 @@ export class AlertModalComponent implements OnInit {
   }
 
   yes() {
-    this.modalService.confirmationSubject.next({
+    this.modalService.confirmationSubject$.next({
       action: this.additionalData,
       choice: true,
     });

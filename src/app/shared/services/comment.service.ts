@@ -4,6 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Constants } from 'src/app/constants';
 import { Comment } from '../models/comment';
+import { ModalService } from './modal.service';
 
 const API_URL = Constants.BASE_API_URL;
 
@@ -14,7 +15,7 @@ export class CommentService {
   private _comments: Comment[];
   commentChanged$: Subject<Comment[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private modalService: ModalService) {
     this._comments = [];
     this.commentChanged$ = new Subject<Comment[]>();
   }
@@ -24,6 +25,7 @@ export class CommentService {
   }
 
   fetchComments() {
+    this.modalService.showLoadingModal(true, 'Kommentek betöltése...');
     return this.http.get<Comment[]>(`${API_URL}/comments`).pipe(
       tap((comments) => {
         this._comments = comments;

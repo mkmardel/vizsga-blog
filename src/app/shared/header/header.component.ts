@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
     this.authService.userStateChanged.subscribe((user) => {
       this.loggedIn = user != null;
       if (this.loggedIn) {
-        this.modalService.loginModalSubject.next({ open: false });
+        this.modalService.loginModalSubject$.next({ open: false });
         $('.navbar-collapse').collapse('hide');
       }
       if (!user) {
@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    this.modalService.loginModalSubject.next({ open: true });
+    this.modalService.loginModalSubject$.next({ open: true });
   }
   logout() {
     this.authService.logout();
