@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Comment } from 'src/app/shared/models/comment';
@@ -11,7 +11,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
   templateUrl: './comment-item.component.html',
   styleUrls: ['./comment-item.component.scss'],
 })
-export class CommentItemComponent implements OnInit {
+export class CommentItemComponent implements OnInit, OnDestroy {
   @Input() comment: Comment;
   isAdmin: boolean;
   private subscription: Subscription;
@@ -25,7 +25,10 @@ export class CommentItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.userState.role == 'admin';
+    this.isAdmin = this.authService.userState?.role == 'admin';
+    this.subscription = this.authService.userStateChanged$.subscribe((user) => {
+      this.isAdmin = user?.role == 'admin';
+    });
   }
 
   deleteComment() {
@@ -40,5 +43,9 @@ export class CommentItemComponent implements OnInit {
       'confirm',
       this.comment.id
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

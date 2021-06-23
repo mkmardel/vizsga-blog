@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
     this.currentUser = this.authService.getStoredUser();
     this.loggedIn = this.currentUser != null;
 
-    this.authService.userStateChanged.subscribe((user) => {
+    this.authService.userStateChanged$.subscribe((user) => {
       this.loggedIn = user != null;
       if (this.loggedIn) {
         this.modalService.loginModalSubject$.next({ open: false });

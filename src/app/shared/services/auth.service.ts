@@ -8,11 +8,11 @@ import { UsersService } from './users.service';
 })
 export class AuthService {
   private _userState: User;
-  public userStateChanged: Subject<User>;
+  public userStateChanged$: Subject<User>;
   private users: User[];
 
   constructor(private usersService: UsersService) {
-    this.userStateChanged = new Subject<User>();
+    this.userStateChanged$ = new Subject<User>();
   }
 
   get userState() {
@@ -52,7 +52,7 @@ export class AuthService {
     this._userState = null;
     localStorage.removeItem('remember');
     localStorage.removeItem('currentUser');
-    this.userStateChanged.next(this.userState);
+    this.userStateChanged$.next(this.userState);
   }
 
   async getUsersList(): Promise<User[]> {

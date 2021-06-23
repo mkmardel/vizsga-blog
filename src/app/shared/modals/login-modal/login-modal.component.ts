@@ -70,7 +70,7 @@ export class LoginModalComponent implements OnInit {
               );
               return;
             }
-            this.authService.userStateChanged.next(res);
+            this.authService.userStateChanged$.next(res);
             console.log(res);
           },
           (err) => {
