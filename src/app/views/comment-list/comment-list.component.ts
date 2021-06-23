@@ -22,7 +22,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
       (comment) => comment.postId == this.postId
     );
 
-    this.commentSubscription = this.commentService.commentChanged$.subscribe(
+    this.commentSubscription = this.commentService.commentsChanged$.subscribe(
       (comments) => {
         this.comments = comments.filter(
           (comment) => comment.postId == this.postId

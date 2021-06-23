@@ -33,4 +33,15 @@ export class PostService {
       })
     );
   }
+
+  addPost(newPost: Post) {
+    this.posts.push(newPost);
+    this.postsChanged$.next(this.posts);
+  }
+
+  deletePost(id: number) {
+    let index = this.posts.findIndex((post) => post.id == id);
+    this.posts.splice(index, 1);
+    this.postsChanged$.next(this.posts);
+  }
 }

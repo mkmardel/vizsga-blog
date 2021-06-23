@@ -10,8 +10,13 @@ export class ModalService {
     title: string;
     additional: string | null;
     role: string;
+    id: number;
   }>;
-  public confirmationSubject$: Subject<{ action: string; choice: boolean }>;
+  public confirmationSubject$: Subject<{
+    action: string;
+    choice: boolean;
+    id: number;
+  }>;
   loadingModalSubject$: Subject<{ open: boolean; title: string }>;
 
   constructor() {
@@ -20,10 +25,12 @@ export class ModalService {
       title: string;
       additional: string | null;
       role: string;
+      id: number;
     }>();
     this.confirmationSubject$ = new Subject<{
       action: string;
       choice: boolean;
+      id: number;
     }>();
     this.loadingModalSubject$ = new Subject<{ open: boolean; title: string }>();
   }
@@ -37,6 +44,7 @@ export class ModalService {
       title: string;
       additional: string;
       role: string;
+      id: number;
     }>;
   }
 
@@ -44,6 +52,7 @@ export class ModalService {
     return this.confirmationSubject$ as Observable<{
       action: string;
       choice: boolean;
+      id: number;
     }>;
   }
 
@@ -54,11 +63,17 @@ export class ModalService {
     }>;
   }
 
-  showAlertModal(_text: string, _additional: string, _role: string) {
+  showAlertModal(
+    _text: string,
+    _additional: string,
+    _role: string,
+    _id: number = -1
+  ) {
     this.alertModalSubject$.next({
       title: _text,
       additional: _additional,
       role: _role,
+      id: _id,
     });
   }
 

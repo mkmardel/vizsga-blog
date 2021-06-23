@@ -23,14 +23,17 @@ export class LoadingModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalService.LoadingModalState.subscribe((data) => {
-      this.title = data.title;
+      this.title = data.title ? data.title : 'Kérlek várj...';
       $('#loadingModal').modal('show');
+      setTimeout(() => {
+        this.close();
+      }, 5000);
     });
 
-    this.postService.postsChanged$.pipe(auditTime(1000)).subscribe(() => {
+    this.postService.postsChanged$.pipe(auditTime(500)).subscribe(() => {
       this.close();
     });
-    this.commentService.commentChanged$.pipe(auditTime(1000)).subscribe(() => {
+    this.commentService.commentsChanged$.pipe(auditTime(500)).subscribe(() => {
       this.close();
     });
   }

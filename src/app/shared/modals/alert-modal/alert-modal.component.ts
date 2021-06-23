@@ -11,11 +11,13 @@ export class AlertModalComponent implements OnInit {
   alertText: string;
   additionalData: string | null;
   role: string;
+  id: number;
 
   constructor(private modalService: ModalService) {
     this.alertText = '';
     this.additionalData = null;
     this.role = '';
+    this.id = -1;
   }
 
   ngOnInit(): void {
@@ -23,6 +25,7 @@ export class AlertModalComponent implements OnInit {
       this.alertText = data.title;
       this.additionalData = data.additional;
       this.role = data.role;
+      this.id = data.id;
       $('#alertModal').modal('show');
     });
   }
@@ -31,6 +34,7 @@ export class AlertModalComponent implements OnInit {
     this.modalService.confirmationSubject$.next({
       action: this.additionalData,
       choice: true,
+      id: this.id,
     });
     this.close();
   }
@@ -44,5 +48,6 @@ export class AlertModalComponent implements OnInit {
     this.alertText = '';
     this.additionalData = '';
     this.role = '';
+    this.id = -1;
   }
 }

@@ -3,6 +3,14 @@ body {
   background: #eee;
 }
 
+input {
+  border-radius: 4px 0 0 4px;
+}
+
+.btn {
+  border-radius: 0 4px 4px 0;
+}
+
 .timeline .timeline-body > div + div {
   margin-top: 15px;
 }

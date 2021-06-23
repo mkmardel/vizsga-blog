@@ -13,11 +13,11 @@ const API_URL = Constants.BASE_API_URL;
 })
 export class CommentService {
   private _comments: Comment[];
-  commentChanged$: Subject<Comment[]>;
+  commentsChanged$: Subject<Comment[]>;
 
   constructor(private http: HttpClient, private modalService: ModalService) {
     this._comments = [];
-    this.commentChanged$ = new Subject<Comment[]>();
+    this.commentsChanged$ = new Subject<Comment[]>();
   }
 
   get comments() {
@@ -29,8 +29,19 @@ export class CommentService {
     return this.http.get<Comment[]>(`${API_URL}/comments`).pipe(
       tap((comments) => {
         this._comments = comments;
-        this.commentChanged$.next(comments);
+        this.commentsChanged$.next(comments);
       })
     );
+  }
+
+  addComment(newComment: Comment) {
+    this.comments.push(newComment);
+    this.commentsChanged$.next(this.comments);
+  }
+
+  deleteComment(id: number) {
+    let index = this.comments.findIndex((comment) => comment.id == id);
+    this.comments.splice(index, 1);
+    this.commentsChanged$.next(this.comments);
   }
 }

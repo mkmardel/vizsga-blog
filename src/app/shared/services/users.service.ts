@@ -28,7 +28,7 @@ export class UsersService {
             user.username,
             user.name,
             user.email,
-            user.id % 3 === 0 ? 'admin' : 'user'
+            user.email === 'Sincere@april.biz' ? 'admin' : 'user'
           );
         });
       }),
