@@ -1,9 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/shared/models/post';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CommentService } from 'src/app/shared/services/comment.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
 import { PostService } from 'src/app/shared/services/post.service';
 declare var $: any;
 
@@ -13,16 +16,21 @@ declare var $: any;
   styleUrls: ['./post-create.component.scss'],
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
+  @Input() isUpdating: boolean;
+  @Input() post: Post;
+  @Output() closeForm = new EventEmitter();
+  private subscription: Subscription;
   formVisible: boolean;
   submitted: boolean;
   postForm: FormGroup;
   user: User;
   loggedIn: boolean;
-  private subscription: Subscription;
 
   constructor(
     private postService: PostService,
-    private authService: AuthService
+    private authService: AuthService,
+    private commentService: CommentService,
+    private modalService: ModalService
   ) {
     this.formVisible = false;
     this.submitted = false;
@@ -39,6 +47,12 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     });
 
     this.initForm();
+
+    if (this.isUpdating) {
+      this.postForm.controls['postTitle'].setValue(this.post.title);
+      this.postForm.controls['postBody'].setValue(this.post.body);
+      this.formVisible = true;
+    }
   }
 
   get pf() {
@@ -82,9 +96,29 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     }, 400);
   }
 
+  cancel() {
+    if (this.isUpdating) {
+      this.closeForm.emit();
+      return;
+    }
+    this.toggleForm(false);
+  }
+
+  updatePost() {
+    let updatedPost = this.post;
+    updatedPost.title = this.pf.postTitle.value;
+    updatedPost.body = this.pf.postBody.value;
+    this.postService.updatePost(updatedPost);
+    this.closeForm.emit();
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.postForm.invalid) {
+      return;
+    }
+    if (this.isUpdating) {
+      this.updatePost();
       return;
     }
     let id = this.postService.posts.length + 1;
@@ -98,6 +132,6 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 }

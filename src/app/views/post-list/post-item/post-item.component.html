@@ -1,14 +1,29 @@
 <div class="timeline-header">
   <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
   <span class="username">{{ user.name }}</span>
+  <div *ngIf="ownPost" class="btn-group">
+    <div class="btn btn-success btn-sm">
+      <i class="bi bi-pencil-square" (click)="editPost()"></i>
+    </div>
+    <div class="btn btn-danger btn-sm" (click)="deletePost()">
+      <i class="bi bi-trash"></i>
+    </div>
+  </div>
 </div>
-<div class="timeline-content">
+<div class="timeline-content" *ngIf="!isUpdating">
   <br />
   <strong>{{ post.title }}</strong>
   <br />
   <p>
     {{ post.body }}
   </p>
+</div>
+<div *ngIf="isUpdating">
+  <app-post-create
+    [isUpdating]="isUpdating"
+    (closeForm)="isUpdating = false"
+    [post]="post"
+  ></app-post-create>
 </div>
 <div class="timeline-footer">
   <a (click)="loadComments()" class="m-r-15 text-inverse-lighter"

@@ -24,10 +24,13 @@ import { UsersService } from 'src/app/shared/services/users.service';
 export class PostItemComponent implements OnInit, OnDestroy {
   @Input() post: Post;
   @ViewChild('commentInput') commentInput: ElementRef;
+  private loggedInUser: User;
+  private userSubscription: Subscription;
   showComments: boolean;
   user: User;
   loggedIn: boolean;
-  private subscription: Subscription;
+  ownPost: boolean;
+  isUpdating: boolean;
 
   constructor(
     private userService: UsersService,
@@ -38,16 +41,24 @@ export class PostItemComponent implements OnInit, OnDestroy {
   ) {
     this.showComments = false;
     this.loggedIn = false;
+    this.ownPost = false;
+    this.isUpdating = false;
   }
 
   ngOnInit(): void {
     this.user = this.userService.users.find(
       (user) => user.id == this.post.userId
     );
-    this.loggedIn = this.authService.userState != null;
-    this.subscription = this.authService.userStateChanged$.subscribe((user) => {
-      this.loggedIn = user != null;
-    });
+    this.loggedInUser = this.authService.userState;
+    this.loggedIn = this.loggedInUser != null;
+    this.ownPost = this.user.id == this.loggedInUser.id;
+    this.userSubscription = this.authService.userStateChanged$.subscribe(
+      (user) => {
+        this.loggedInUser = user;
+        this.loggedIn = user != null;
+        this.ownPost = this.user.id == user.id;
+      }
+    );
   }
 
   loadComments() {
@@ -75,7 +86,46 @@ export class PostItemComponent implements OnInit, OnDestroy {
     this.commentInput.nativeElement.value = '';
   }
 
+  validateAction(deleting: boolean) {
+    let hasComment = this.commentService.comments.find(
+      (comment) => comment.postId == this.post.id
+    );
+    if (hasComment) {
+      this.modalService.showAlertModal(
+        `Olyan poszt nem ${
+          deleting ? 'törölhető' : 'módosítható'
+        } amelyre érkezett hozzászólás!`,
+        null,
+        'error'
+      );
+      return false;
+    }
+    return true;
+  }
+
+  editPost() {
+    if (this.validateAction(false)) {
+      this.isUpdating = !this.isUpdating;
+    }
+  }
+
+  deletePost() {
+    if (this.validateAction(true)) {
+      this.modalService.ConfirmState.forEach((state) => {
+        if (state.action == 'delete_post' && state.id == this.post.id) {
+          this.postService.deletePost(this.post.id);
+        }
+      });
+      this.modalService.showAlertModal(
+        'Biztosan törölni szeretnéd a posztot?',
+        'delete_post',
+        'confirm',
+        this.post.id
+      );
+    }
+  }
+
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 }

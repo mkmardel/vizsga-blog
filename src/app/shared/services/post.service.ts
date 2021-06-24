@@ -39,6 +39,11 @@ export class PostService {
     this.postsChanged$.next(this.posts);
   }
 
+  updatePost(updatedPost: Post) {
+    let index = this.posts.indexOf(updatedPost);
+    this.posts[index] = updatedPost;
+  }
+
   deletePost(id: number) {
     let index = this.posts.findIndex((post) => post.id == id);
     this.posts.splice(index, 1);

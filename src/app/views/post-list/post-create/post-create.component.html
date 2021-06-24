@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="card">
+  <div [class.card]="!isUpdating">
     <div class="card-body">
       <div *ngIf="!formVisible" id="addDiv" class="fade-in">
         <button
@@ -8,10 +8,15 @@
           (click)="toggleForm(true)"
           [disabled]="!loggedIn"
         >
-          <i class="bi bi-pen"></i>&nbsp;&nbsp;Új posz írása
+          <i class="bi bi-pen"></i>&nbsp;&nbsp;Új poszt írása
         </button>
       </div>
-      <div *ngIf="formVisible" id="formsDiv" class="col-sm-12 mt-2">
+      <div
+        *ngIf="formVisible"
+        id="formsDiv"
+        class="col-sm-12 mt-2"
+        [class.visible]="isUpdating"
+      >
         <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <div class="input-group mb-3">
@@ -72,11 +77,7 @@
               <button type="submit" class="btn btn-success">
                 <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></button
               >&nbsp;&nbsp;
-              <button
-                type="button"
-                (click)="toggleForm(false)"
-                class="btn btn-danger"
-              >
+              <button type="button" (click)="cancel()" class="btn btn-danger">
                 <i class="bi bi-x">&nbsp;&nbsp;Mégsem</i>
               </button>
             </div>

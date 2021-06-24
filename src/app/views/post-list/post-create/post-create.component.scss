@@ -59,6 +59,10 @@
   opacity: 0;
 }
 
+.visible {
+  opacity: 1 !important;
+}
+
 .move-up {
   animation: mup 0.8s;
   -webkit-animation: mup 0.8s;

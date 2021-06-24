@@ -1,14 +1,14 @@
 <hr />
-<button
-  *ngIf="isAdmin"
-  class="btn btn-danger btn-sm mx-2"
-  (click)="deleteComment()"
->
-  <i class="bi bi-trash"></i>
-</button>
 <img src="assets/img/comment.png" alt="comment" style="margin: 0 10px 0 0px" />
 <span style="font-size: 13px">
   <strong>{{ comment.email }}</strong
-  ><br />
+  ><button
+    *ngIf="isAdmin"
+    class="btn btn-danger btn-sm mx-2"
+    (click)="deleteComment()"
+  >
+    <i class="bi bi-trash"></i>
+  </button>
+  <br />
   <div class="mx-2 mt-1">{{ comment.body }}</div>
 </span>
