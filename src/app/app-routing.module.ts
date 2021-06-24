@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { UserRoleGuard } from './shared/guards/user-role.guard';
 import { CommentsResolver } from './shared/resolvers/comments.resolver';
 import { PostsResolver } from './shared/resolvers/posts.resolver';
 import { UsersResolver } from './shared/resolvers/users.resolver';
@@ -17,18 +19,19 @@ const routes: Routes = [
     path: 'posts',
     component: PostListComponent,
     resolve: [UsersResolver, CommentsResolver, PostsResolver],
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'comments',
     component: CommentSummaryComponent,
     resolve: [UsersResolver, PostsResolver, CommentsResolver],
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'users',
     component: UsersComponent,
     resolve: [CommentsResolver, UsersResolver],
+    canActivate: [AuthGuard, UserRoleGuard],
     children: [
       { path: '', component: UserSelectComponent },
       {
@@ -42,7 +45,6 @@ const routes: Routes = [
     path: 'gallery',
     component: GalleryComponent,
     resolve: [],
-    pathMatch: 'full',
   },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

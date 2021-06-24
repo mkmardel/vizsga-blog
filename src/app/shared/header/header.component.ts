@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit {
 
     this.authService.userStateChanged$.subscribe((user) => {
       this.loggedIn = user != null;
+      this.isAdmin = user.role == 'admin';
       if (this.loggedIn) {
         this.modalService.loginModalSubject$.next({ open: false });
         $('.navbar-collapse').collapse('hide');
