@@ -1,0 +1,58 @@
+<div
+  class="modal fade"
+  id="galleryModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="galleryModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" style="min-width: 60%">
+    <div class="modal-content">
+      <div *ngIf="isLoading" class="w-100 p-5 text-center">
+        <img src="assets/img/loading.gif" alt="loading" />
+      </div>
+      <div *ngIf="!isLoading">
+        <div class="header">
+          <strong
+            ><i class="bi bi-chat-right-quote"></i>&nbsp;&nbsp;{{
+              images[currentIndex].title
+            }}</strong
+          >
+          <span class="btn-close" (click)="close()"></span>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12 w100 text-center">
+              <span class="btn-left" (click)="left()"
+                ><i class="bi bi-caret-left-fill"></i
+              ></span>
+              <div>
+                <img
+                  id="mainImage"
+                  class="img-fluid"
+                  [src]="images[currentIndex].url"
+                  width="55%"
+                  height="55%"
+                  alt="image"
+                />
+              </div>
+              <span class="btn-right" (click)="right()"
+                ><i class="bi bi-caret-right-fill"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="counter"
+            ><i class="bi bi-images"></i>&nbsp;&nbsp;{{ currentIndex + 1 }}/{{
+              images.length
+            }}</span
+          >
+          <button class="btn btn-secondary mt-2 btn-sm" (click)="close()">
+            <i class="bi bi-x-lg"></i>&nbsp;&nbsp;Bezárás
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

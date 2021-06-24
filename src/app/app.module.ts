@@ -24,6 +24,8 @@ import { UsersComponent } from './views/users/users.component';
 import { UserListComponent } from './views/users/user-list/user-list.component';
 import { UserItemComponent } from './views/users/user-item/user-item.component';
 import { UserSelectComponent } from './views/users/user-select/user-select.component';
+import { GalleryItemComponent } from './views/gallery/gallery-item/gallery-item.component';
+import { GalleryModalComponent } from './shared/modals/gallery-modal/gallery-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { UserSelectComponent } from './views/users/user-select/user-select.compo
     UserListComponent,
     UserItemComponent,
     UserSelectComponent,
+    GalleryItemComponent,
+    GalleryModalComponent,
   ],
   imports: [
     BrowserModule,

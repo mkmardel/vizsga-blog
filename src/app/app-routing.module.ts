@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UserRoleGuard } from './shared/guards/user-role.guard';
 import { CommentsResolver } from './shared/resolvers/comments.resolver';
+import { GalleryResolver } from './shared/resolvers/gallery.resolver';
 import { PostsResolver } from './shared/resolvers/posts.resolver';
 import { UsersResolver } from './shared/resolvers/users.resolver';
 import { CommentListComponent } from './views/comment-list/comment-list.component';
@@ -44,7 +45,8 @@ const routes: Routes = [
   {
     path: 'gallery',
     component: GalleryComponent,
-    resolve: [],
+    resolve: [GalleryResolver],
+    canActivate: [AuthGuard],
   },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

@@ -17,7 +17,8 @@ export class ModalService {
     choice: boolean;
     id: number;
   }>;
-  loadingModalSubject$: Subject<{ open: boolean; title: string }>;
+  public loadingModalSubject$: Subject<{ open: boolean; title: string }>;
+  public galleryModalSubject$: Subject<{ open: boolean; albumId: number }>;
 
   constructor() {
     this.loginModalSubject$ = new Subject<{ open: boolean }>();
@@ -33,6 +34,10 @@ export class ModalService {
       id: number;
     }>();
     this.loadingModalSubject$ = new Subject<{ open: boolean; title: string }>();
+    this.galleryModalSubject$ = new Subject<{
+      open: boolean;
+      albumId: number;
+    }>();
   }
 
   get LoginModalState() {
@@ -63,6 +68,13 @@ export class ModalService {
     }>;
   }
 
+  get GalleryModalState() {
+    return this.galleryModalSubject$ as Observable<{
+      open: boolean;
+      albumId: number;
+    }>;
+  }
+
   showAlertModal(
     _text: string,
     _additional: string,
@@ -79,5 +91,9 @@ export class ModalService {
 
   showLoadingModal(_open: boolean, _title: string) {
     this.loadingModalSubject$.next({ open: _open, title: _title });
+  }
+
+  showGalleryModal(_open: boolean, _albumId: number) {
+    this.galleryModalSubject$.next({ open: _open, albumId: _albumId });
   }
 }

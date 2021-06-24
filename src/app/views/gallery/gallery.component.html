@@ -1,1 +1,7 @@
-<p>gallery works!</p>
+<div class="row">
+  <div class="col-sm-3 my-2" *ngFor="let album of albums">
+    <app-gallery-item [album]="album"></app-gallery-item>
+  </div>
+</div>
+
+<app-gallery-modal></app-gallery-modal>
