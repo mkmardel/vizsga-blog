@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap, toArray } from 'rxjs/operators';
 import { Constants } from 'src/app/constants';
 import { Post } from '../models/post';
 import { ModalService } from './modal.service';
@@ -28,14 +28,14 @@ export class PostService {
     this.modalService.showLoadingModal(true, 'Posztok betöltése...');
     return this.http.get<Post[]>(`${API_URL}/posts`).pipe(
       tap((posts) => {
-        this._posts = posts;
+        this._posts = posts.sort((a, b) => <any>b.id - a.id);
         this.postsChanged$.next(this.posts);
       })
     );
   }
 
   addPost(newPost: Post) {
-    this.posts.push(newPost);
+    this.posts.unshift(newPost);
     this.postsChanged$.next(this.posts);
   }
 

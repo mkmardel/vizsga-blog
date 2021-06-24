@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="!formVisible" id="addDiv" class="fade-in">
+        <button
+          id="addBtn"
+          class="btn btn-primary"
+          (click)="toggleForm(true)"
+          [disabled]="!loggedIn"
+        >
+          <i class="bi bi-pen"></i>&nbsp;&nbsp;Új posz írása
+        </button>
+      </div>
+      <div *ngIf="formVisible" id="formsDiv" class="col-sm-12 mt-2">
+        <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="bi bi-fonts"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Poszt címe"
+                aria-label="Poszt címe"
+                formControlName="postTitle"
+                aria-describedby="basic-addon1"
+                [ngClass]="{ 'is-invalid': submitted && pf.postTitle.errors }"
+              />
+              <div
+                *ngIf="submitted && pf.postTitle.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="pf.postTitle.errors.required">
+                  Add meg a poszt címét
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text for-body" id="basic-addon1"
+                  ><i class="bi bi-blockquote-left"></i
+                ></span>
+              </div>
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="Poszt tartalma"
+                aria-label="Poszt tartalma"
+                formControlName="postBody"
+                aria-describedby="basic-addon1"
+                [ngClass]="{ 'is-invalid': submitted && pf.postBody.errors }"
+              ></textarea>
+              <div
+                *ngIf="submitted && pf.postBody.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="pf.postBody.errors.required">
+                  Add meg a poszt tartalmát
+                </div>
+                <div *ngIf="pf.postBody.errors.minlength">
+                  A tartalom hossza minimum 5 karakter
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></button
+              >&nbsp;&nbsp;
+              <button
+                type="button"
+                (click)="toggleForm(false)"
+                class="btn btn-danger"
+              >
+                <i class="bi bi-x">&nbsp;&nbsp;Mégsem</i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

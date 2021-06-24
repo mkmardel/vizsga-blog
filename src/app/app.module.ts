@@ -16,6 +16,7 @@ import { PostItemComponent } from './views/post-list/post-item/post-item.compone
 import { CommentItemComponent } from './views/comment-list/comment-item/comment-item.component';
 import { CommentListComponent } from './views/comment-list/comment-list.component';
 import { LoadingModalComponent } from './shared/modals/loading-modal/loading-modal.component';
+import { PostCreateComponent } from './views/post-list/post-create/post-create.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LoadingModalComponent } from './shared/modals/loading-modal/loading-mod
     CommentItemComponent,
     CommentListComponent,
     LoadingModalComponent,
+    PostCreateComponent,
   ],
   imports: [
     BrowserModule,
