@@ -3,6 +3,7 @@ import { auditTime } from 'rxjs/operators';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
+import { UsersService } from '../../services/users.service';
 declare var $: any;
 
 @Component({
@@ -16,7 +17,8 @@ export class LoadingModalComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private postService: PostService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private usersService: UsersService
   ) {
     this.title = '';
   }
@@ -34,6 +36,9 @@ export class LoadingModalComponent implements OnInit {
       this.close();
     });
     this.commentService.commentsChanged$.pipe(auditTime(500)).subscribe(() => {
+      this.close();
+    });
+    this.usersService.usersChanged$.pipe(auditTime(500)).subscribe(() => {
       this.close();
     });
   }

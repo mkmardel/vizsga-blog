@@ -79,7 +79,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
       this.post.id,
       newId,
       '',
-      this.user.email,
+      this.loggedInUser.email,
       text
     );
     this.commentService.addComment(newComment);

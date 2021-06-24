@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Constants } from 'src/app/constants';
 import { map, tap } from 'rxjs/operators';
+import { ModalService } from './modal.service';
+import { Subject } from 'rxjs';
 
 const API_URL: string = Constants.BASE_API_URL;
 
@@ -11,8 +13,10 @@ const API_URL: string = Constants.BASE_API_URL;
 })
 export class UsersService {
   private _users: User[];
-  constructor(private http: HttpClient) {
+  usersChanged$: Subject<User[]>;
+  constructor(private http: HttpClient, private modalService: ModalService) {
     this._users = [];
+    this.usersChanged$ = new Subject<User[]>();
   }
 
   get users() {
@@ -20,6 +24,7 @@ export class UsersService {
   }
 
   fetchUsers() {
+    this.modalService.showLoadingModal(true, 'Felhasználók betöltése...');
     return this.http.get<User[]>(`${API_URL}/users`).pipe(
       map((users) => {
         return users.map((user: User) => {
@@ -34,6 +39,7 @@ export class UsersService {
       }),
       tap((users) => {
         this._users = users;
+        this.usersChanged$.next(users);
       })
     );
   }

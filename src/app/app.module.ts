@@ -17,6 +17,14 @@ import { CommentItemComponent } from './views/comment-list/comment-item/comment-
 import { CommentListComponent } from './views/comment-list/comment-list.component';
 import { LoadingModalComponent } from './shared/modals/loading-modal/loading-modal.component';
 import { PostCreateComponent } from './views/post-list/post-create/post-create.component';
+import { CommentSummaryComponent } from './views/comment-summary/comment-summary.component';
+import { CommentCardComponent } from './views/comment-summary/comment-card/comment-card.component';
+import { GalleryComponent } from './views/gallery/gallery.component';
+import { UsersComponent } from './views/users/users.component';
+import { UserListComponent } from './views/users/user-list/user-list.component';
+import { UserItemComponent } from './views/users/user-item/user-item.component';
+import { UserSelectComponent } from './views/users/user-select/user-select.component';
+import { UserCommentListComponent } from './views/users/user-comment-list/user-comment-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +41,14 @@ import { PostCreateComponent } from './views/post-list/post-create/post-create.c
     CommentListComponent,
     LoadingModalComponent,
     PostCreateComponent,
+    CommentSummaryComponent,
+    CommentCardComponent,
+    GalleryComponent,
+    UsersComponent,
+    UserListComponent,
+    UserItemComponent,
+    UserSelectComponent,
+    UserCommentListComponent,
   ],
   imports: [
     BrowserModule,
