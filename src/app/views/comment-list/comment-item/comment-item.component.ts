@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Comment } from 'src/app/shared/models/comment';
@@ -13,8 +14,11 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 })
 export class CommentItemComponent implements OnInit, OnDestroy {
   @Input() comment: Comment;
-  isAdmin: boolean;
   private subscription: Subscription;
+  isAdmin: boolean;
+  formVisible: boolean;
+  submitted: boolean;
+  commentForm: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -22,6 +26,8 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     private modalService: ModalService
   ) {
     this.isAdmin = false;
+    this.formVisible = false;
+    this.submitted = false;
   }
 
   ngOnInit(): void {
@@ -29,6 +35,23 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.userStateChanged$.subscribe((user) => {
       this.isAdmin = user?.role == 'admin';
     });
+
+    this.initForm();
+  }
+
+  get cf() {
+    return this.commentForm.controls;
+  }
+
+  initForm() {
+    this.commentForm = new FormGroup({
+      commentBody: new FormControl('', [Validators.required]),
+    });
+  }
+
+  editComment() {
+    this.commentForm.controls['commentBody'].setValue(this.comment.body);
+    this.formVisible = !this.formVisible;
   }
 
   deleteComment() {
@@ -43,6 +66,17 @@ export class CommentItemComponent implements OnInit, OnDestroy {
       'confirm',
       this.comment.id
     );
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.cf.invalid) {
+      return;
+    }
+    let updatedComment = this.comment;
+    updatedComment.body = this.cf.commentBody.value;
+    this.commentService.updateComment(updatedComment);
+    this.formVisible = false;
   }
 
   ngOnDestroy(): void {

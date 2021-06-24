@@ -1,19 +1,13 @@
-<!-- <a
-  href="#"
-  class="list-group-item clearfix"
-  [routerLink]="[index]"
-  routerLinkActive="active"
->
-  <div>
-    <h4>{{ recipe.name }}</h4>
-    <p>{{ recipe.description }}</p>
+<div class="row">
+  <div class="col-12 mb-1">
+    <a class="list-group-item" [routerLink]="[index]" routerLinkActive="active">
+      <h6>
+        <i class="bi bi-person-square"></i>&nbsp;&nbsp;{{ user.name }} ({{
+          user.username
+        }})
+      </h6>
+      <span>{{ user.email }}</span> <br />
+      <span>{{ user.role == "admin" ? "Admin" : "Felhasználó" }}</span>
+    </a>
   </div>
-  <div>
-    <img
-      [src]="recipe.imagePath"
-      alt="{{ recipe.name }}"
-      class="img-fluid"
-      style="max-height: 60px"
-    />
-  </div>
-</a> -->
+</div>

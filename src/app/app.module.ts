@@ -24,7 +24,6 @@ import { UsersComponent } from './views/users/users.component';
 import { UserListComponent } from './views/users/user-list/user-list.component';
 import { UserItemComponent } from './views/users/user-item/user-item.component';
 import { UserSelectComponent } from './views/users/user-select/user-select.component';
-import { UserCommentListComponent } from './views/users/user-comment-list/user-comment-list.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { UserCommentListComponent } from './views/users/user-comment-list/user-c
     UserListComponent,
     UserItemComponent,
     UserSelectComponent,
-    UserCommentListComponent,
   ],
   imports: [
     BrowserModule,

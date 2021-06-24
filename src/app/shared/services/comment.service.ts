@@ -39,6 +39,17 @@ export class CommentService {
     this.commentsChanged$.next(this.comments);
   }
 
+  updateComment(updatedComment: Comment) {
+    let index = this.comments.indexOf(updatedComment);
+    this.comments[index] = updatedComment;
+    this.commentsChanged$.next(this.comments);
+    this.modalService.showAlertModal(
+      'Sikeresen módosítottad a kommentet!',
+      null,
+      'success'
+    );
+  }
+
   deleteComment(id: number) {
     let index = this.comments.findIndex((comment) => comment.id == id);
     this.comments.splice(index, 1);

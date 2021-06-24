@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommentsResolver } from './shared/resolvers/comments.resolver';
 import { PostsResolver } from './shared/resolvers/posts.resolver';
 import { UsersResolver } from './shared/resolvers/users.resolver';
+import { CommentListComponent } from './views/comment-list/comment-list.component';
 import { CommentSummaryComponent } from './views/comment-summary/comment-summary.component';
 import { GalleryComponent } from './views/gallery/gallery.component';
 import { HomeComponent } from './views/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { PostListComponent } from './views/post-list/post-list.component';
-import { UserCommentListComponent } from './views/users/user-comment-list/user-comment-list.component';
 import { UserSelectComponent } from './views/users/user-select/user-select.component';
 import { UsersComponent } from './views/users/users.component';
 
@@ -29,13 +29,12 @@ const routes: Routes = [
     path: 'users',
     component: UsersComponent,
     resolve: [CommentsResolver, UsersResolver],
-    pathMatch: 'full',
     children: [
       { path: '', component: UserSelectComponent },
       {
         path: ':id',
-        component: UserCommentListComponent,
-        resolve: [UsersResolver],
+        component: CommentListComponent,
+        resolve: [CommentsResolver, UsersResolver],
       },
     ],
   },

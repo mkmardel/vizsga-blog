@@ -1,3 +1,17 @@
-<div *ngFor="let comment of comments">
-  <app-comment-item [comment]="comment"></app-comment-item>
+<div [class.card]="userId > -1">
+  <div [class.card-body]="userId > -1">
+    <div *ngIf="comments.length == 0">
+      <i class="bi bi-exclamation-diamond"></i>&nbsp;&nbsp;Nincs megjeleníthető
+      komment!
+    </div>
+    <div *ngIf="comments.length > 0">
+      <p *ngIf="userId > -1">
+        <i class="bi bi-chat-dots"></i>&nbsp;&nbsp;Felhasználó kommentjei:
+      </p>
+      <app-comment-item
+        *ngFor="let comment of comments"
+        [comment]="comment"
+      ></app-comment-item>
+    </div>
+  </div>
 </div>

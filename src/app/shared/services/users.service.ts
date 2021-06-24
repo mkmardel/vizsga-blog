@@ -24,7 +24,7 @@ export class UsersService {
   }
 
   fetchUsers() {
-    this.modalService.showLoadingModal(true, 'Felhasználók betöltése...');
+    //this.modalService.showLoadingModal(true, 'Felhasználók betöltése...');
     return this.http.get<User[]>(`${API_URL}/users`).pipe(
       map((users) => {
         return users.map((user: User) => {

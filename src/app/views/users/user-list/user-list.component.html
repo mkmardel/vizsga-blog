@@ -1,1 +1,11 @@
-<p>user-list works!</p>
+<div class="row">
+  <div class="col-12">
+    <div>
+      <app-user-item
+        *ngFor="let user of users; let i = index"
+        [user]="user"
+        [index]="i"
+      ></app-user-item>
+    </div>
+  </div>
+</div>

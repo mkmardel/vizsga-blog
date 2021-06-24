@@ -37,11 +37,22 @@ export class PostService {
   addPost(newPost: Post) {
     this.posts.unshift(newPost);
     this.postsChanged$.next(this.posts);
+    this.modalService.showAlertModal(
+      'Sikeresen létrehoztál egy új bejegyzést!',
+      null,
+      'success'
+    );
   }
 
   updatePost(updatedPost: Post) {
     let index = this.posts.indexOf(updatedPost);
     this.posts[index] = updatedPost;
+    this.postsChanged$.next(this.posts);
+    this.modalService.showAlertModal(
+      'Sikeresen módosítottad a bejegyzést!',
+      null,
+      'success'
+    );
   }
 
   deletePost(id: number) {

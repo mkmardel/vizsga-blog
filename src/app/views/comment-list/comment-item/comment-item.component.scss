@@ -1,3 +1,12 @@
-.btn-danger {
+.btn-group {
   float: right;
+}
+
+.input-group-text {
+  border-radius: 4px 0 0 4px;
+  min-height: 62px;
+}
+
+.is-invalid {
+  border-radius: 0 4px 4px 0 !important;
 }

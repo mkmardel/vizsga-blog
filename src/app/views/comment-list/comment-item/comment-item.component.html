@@ -1,14 +1,59 @@
 <hr />
 <img src="assets/img/comment.png" alt="comment" style="margin: 0 10px 0 0px" />
 <span style="font-size: 13px">
-  <strong>{{ comment.email }}</strong
-  ><button
-    *ngIf="isAdmin"
-    class="btn btn-danger btn-sm mx-2"
-    (click)="deleteComment()"
-  >
-    <i class="bi bi-trash"></i>
-  </button>
+  <strong>{{ comment.email }}</strong>
+  <div *ngIf="isAdmin" class="btn-group mb-1">
+    <button class="btn btn-success btn-sm" (click)="editComment()">
+      <i class="bi bi-pencil-square"></i>
+    </button>
+    <button class="btn btn-danger btn-sm" (click)="deleteComment()">
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
   <br />
-  <div class="mx-2 mt-1">{{ comment.body }}</div>
+  <div *ngIf="!formVisible" class="mx-2 mt-1">{{ comment.body }}</div>
+  <div *ngIf="formVisible">
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"
+              ><i class="bi bi-chat-dots"></i
+            ></span>
+          </div>
+          <textarea
+            type="text"
+            class="form-control"
+            placeholder="Komment"
+            aria-label="Komment"
+            formControlName="commentBody"
+            aria-describedby="basic-addon1"
+            [ngClass]="{ 'is-invalid': submitted && cf.commentBody.errors }"
+          ></textarea>
+          <div
+            *ngIf="submitted && cf.commentBody.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="cf.commentBody.errors.required">
+              Add meg a komment tartalmát
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></button
+          >&nbsp;&nbsp;
+          <button
+            type="button"
+            (click)="this.formVisible = false"
+            class="btn btn-danger"
+          >
+            <i class="bi bi-x">&nbsp;&nbsp;Mégsem</i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </span>
