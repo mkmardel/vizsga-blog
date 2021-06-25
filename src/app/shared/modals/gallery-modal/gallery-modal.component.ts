@@ -21,15 +21,16 @@ export class GalleryModalComponent implements OnInit {
   ) {
     this.isLoading = false;
     this.currentIndex = 0;
+    this.images = [];
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.modalService.GalleryModalState.subscribe((data) => {
       this.albumId = data?.albumId;
       $('#galleryModal').modal('show');
 
       if (this.albumId) {
+        this.isLoading = true;
         this.galleryService.fetchPhotos(this.albumId).subscribe(
           (photos) => {
             this.images = photos;
