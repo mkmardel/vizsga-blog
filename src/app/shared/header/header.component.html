@@ -71,7 +71,7 @@
           >
         </li>
       </ul>
-      <div class="d-flex">
+      <!-- <div class="d-flex">
         <button
           *ngIf="!loggedIn"
           class="btn btn-outline-light"
@@ -86,7 +86,37 @@
         >
           <span class="fas fa-sign-out-alt"></span>&nbsp;&nbsp;Kijelentkezés
         </button>
-      </div>
+      </div> -->
+      <span class="navbar-text">
+        <button
+          *ngIf="!loggedIn"
+          class="btn btn-outline-light"
+          style="margin-right: 20px"
+          (click)="login()"
+        >
+          <span class="fas fa-sign-in-alt"></span>&nbsp;&nbsp;Bejelentkezés
+        </button>
+        <div *ngIf="loggedIn" class="btn-group">
+          <ul class="navbar-nav me-auto">
+            <a
+              type="button"
+              class="text-decoration-none dropdown-toggle"
+              style="margin-right: 20px"
+              data-bs-toggle="dropdown"
+            >
+              <i class="far fa-user-circle"></i>&nbsp;&nbsp;{{ username }}
+            </a>
+            <ul
+              class="dropdown-menu animate slideIn"
+              aria-labelledby="navbarDropdown"
+            >
+              <li (click)="logout()">
+                <a class="dropdown-item">Kijelentkezés</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </span>
     </div>
     <button class="btn-top bounce" (click)="moveToTop()">
       <i class="bi bi-arrow-bar-up"></i>

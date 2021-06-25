@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   public title: string;
   public loggedIn: boolean;
   public isAdmin: boolean;
+  public username: string;
 
   constructor(
     private modalService: ModalService,
@@ -36,14 +37,14 @@ export class HeaderComponent implements OnInit {
     this.title = 'Blogtoday';
     this.loggedIn = false;
     this.isAdmin = false;
+    this.username = '';
   }
 
   ngOnInit(): void {
     this.setRoles(this.authService.getStoredUser());
 
     this.authService.userStateChanged$.subscribe((user) => {
-      this.loggedIn = user != null;
-      this.isAdmin = user?.role == 'admin';
+      this.setRoles(user);
       if (this.loggedIn) {
         this.modalService.loginModalSubject$.next({ open: false });
         $('.navbar-collapse').collapse('hide');
@@ -57,6 +58,7 @@ export class HeaderComponent implements OnInit {
   setRoles(user: User) {
     this.currentUser = user;
     this.loggedIn = this.currentUser != null;
+    this.username = this.currentUser?.username;
     this.isAdmin = this.currentUser?.role == 'admin';
   }
 
