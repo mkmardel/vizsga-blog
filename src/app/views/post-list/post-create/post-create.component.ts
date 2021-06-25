@@ -19,12 +19,14 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   @Input() isUpdating: boolean;
   @Input() post: Post;
   @Output() closeForm = new EventEmitter();
+  @Output() applyFilter = new EventEmitter<boolean>();
   private subscription: Subscription;
   public formVisible: boolean;
   public submitted: boolean;
   public postForm: FormGroup;
   public user: User;
   public loggedIn: boolean;
+  public filtered: boolean;
 
   constructor(
     private postService: PostService,
@@ -35,6 +37,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     this.formVisible = false;
     this.submitted = false;
     this.loggedIn = false;
+    this.filtered = false;
   }
 
   ngOnInit(): void {
@@ -94,6 +97,11 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.formVisible = false;
     }, 400);
+  }
+
+  filterPosts() {
+    this.filtered = !this.filtered;
+    this.applyFilter.emit(this.filtered);
   }
 
   cancel() {

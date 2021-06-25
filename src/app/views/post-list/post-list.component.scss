@@ -74,3 +74,9 @@ select.form-control:not([size]):not([multiple]) {
   left: -20px;
   top: 20px;
 }
+
+@media only screen and (max-width: 476px) {
+  .post-content {
+    margin-left: 12px;
+  }
+}

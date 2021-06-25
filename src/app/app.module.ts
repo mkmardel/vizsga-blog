@@ -28,6 +28,7 @@ import { GalleryItemComponent } from './views/gallery/gallery-item/gallery-item.
 import { GalleryModalComponent } from './shared/modals/gallery-modal/gallery-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { OwnPostsPipe } from './shared/pipes/own-posts.pipe';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { environment } from '../environments/environment';
     UserSelectComponent,
     GalleryItemComponent,
     GalleryModalComponent,
+    OwnPostsPipe,
   ],
   imports: [
     BrowserModule,

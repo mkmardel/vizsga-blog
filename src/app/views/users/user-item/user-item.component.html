@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12 mb-1 card-body">
+  <div class="col-12 mb-1">
     <a class="list-group-item" [routerLink]="[index]" routerLinkActive="active">
       <h6>
         <i class="bi bi-person-square"></i>&nbsp;&nbsp;{{ user.name }} ({{
@@ -9,7 +9,7 @@
       <div *ngIf="!isMobile">{{ user.email }}</div>
       <div *ngIf="isMobile">
         <button class="btn btn-secondary btn-sm" (click)="show(user.email)">
-          <i class="bi bi-eye"></i>&nbsp;E-mail cím
+          <i class="bi bi-eye"></i> E-mail cím
         </button>
       </div>
       <span>{{ user.role == "admin" ? "Admin" : "Felhasználó" }}</span>

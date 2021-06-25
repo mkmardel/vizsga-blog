@@ -12,12 +12,14 @@ import { PostService } from 'src/app/shared/services/post.service';
 export class PostListComponent implements OnInit, OnDestroy {
   private postsSubscription: Subscription;
   public posts: Post[];
+  public filterPosts: boolean;
 
   constructor(
     private postService: PostService,
     private modalService: ModalService
   ) {
     this.posts = [];
+    this.filterPosts = false;
   }
 
   ngOnInit(): void {
@@ -31,5 +33,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.postsSubscription.unsubscribe();
+  }
+
+  applyFilter(event: boolean) {
+    this.filterPosts = event;
   }
 }
