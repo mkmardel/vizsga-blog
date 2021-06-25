@@ -8,10 +8,10 @@ declare var $: any;
   styleUrls: ['./alert-modal.component.scss'],
 })
 export class AlertModalComponent implements OnInit {
-  alertText: string;
-  additionalData: string | null;
-  role: string;
-  id: number;
+  public alertText: string;
+  public additionalData: string | null;
+  public role: string;
+  private id: number;
 
   constructor(private modalService: ModalService) {
     this.alertText = '';

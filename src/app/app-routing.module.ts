@@ -20,7 +20,6 @@ const routes: Routes = [
     path: 'posts',
     component: PostListComponent,
     resolve: [UsersResolver, CommentsResolver, PostsResolver],
-    canActivate: [AuthGuard],
   },
   {
     path: 'comments',

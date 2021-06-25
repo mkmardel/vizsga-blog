@@ -6,3 +6,15 @@
 .card-body {
   padding: 10px 10px 10px 10px;
 }
+
+.short-text {
+  white-space: nowrap;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-sm {
+  padding: 3px 5px;
+  margin-left: -2px;
+}

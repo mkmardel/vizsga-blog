@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit {
   setRoles(user: User) {
     this.currentUser = user;
     this.loggedIn = this.currentUser != null;
-    this.isAdmin = this.currentUser.role == 'admin';
+    this.isAdmin = this.currentUser?.role == 'admin';
   }
 
   login() {

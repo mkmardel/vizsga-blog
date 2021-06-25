@@ -15,9 +15,9 @@ declare var $: any;
   styleUrls: ['./login-modal.component.scss'],
 })
 export class LoginModalComponent implements OnInit {
-  loginForm: FormGroup;
-  submitted: boolean;
-  isLoading: boolean;
+  public loginForm: FormGroup;
+  public submitted: boolean;
+  public isLoading: boolean;
 
   constructor(
     private authService: AuthService,
@@ -71,7 +71,6 @@ export class LoginModalComponent implements OnInit {
               return;
             }
             this.authService.userStateChanged$.next(res);
-            console.log(res);
           },
           (err) => {
             this.isLoading = false;

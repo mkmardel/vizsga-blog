@@ -13,7 +13,7 @@ const API_URL = Constants.BASE_API_URL;
 })
 export class CommentService {
   private _comments: Comment[];
-  commentsChanged$: Subject<Comment[]>;
+  public commentsChanged$: Subject<Comment[]>;
 
   constructor(private http: HttpClient, private modalService: ModalService) {
     this._comments = [];

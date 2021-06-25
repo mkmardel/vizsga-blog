@@ -10,8 +10,8 @@ import { PostService } from 'src/app/shared/services/post.service';
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  posts: Post[];
-  postsSubscription: Subscription;
+  private postsSubscription: Subscription;
+  public posts: Post[];
 
   constructor(
     private postService: PostService,

@@ -26,11 +26,11 @@ export class PostItemComponent implements OnInit, OnDestroy {
   @ViewChild('commentInput') commentInput: ElementRef;
   private loggedInUser: User;
   private userSubscription: Subscription;
-  showComments: boolean;
-  user: User;
-  loggedIn: boolean;
-  ownPost: boolean;
-  isUpdating: boolean;
+  public showComments: boolean;
+  public user: User;
+  public loggedIn: boolean;
+  public ownPost: boolean;
+  public isUpdating: boolean;
 
   constructor(
     private userService: UsersService,
@@ -51,12 +51,12 @@ export class PostItemComponent implements OnInit, OnDestroy {
     );
     this.loggedInUser = this.authService.userState;
     this.loggedIn = this.loggedInUser != null;
-    this.ownPost = this.user.id == this.loggedInUser.id;
+    this.ownPost = this.user.id == this.loggedInUser?.id;
     this.userSubscription = this.authService.userStateChanged$.subscribe(
       (user) => {
         this.loggedInUser = user;
         this.loggedIn = user != null;
-        this.ownPost = this.user.id == user.id;
+        this.ownPost = this.user.id == user?.id;
       }
     );
   }

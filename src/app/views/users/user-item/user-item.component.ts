@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { User } from 'src/app/shared/models/user';
+declare var $: any;
 
 @Component({
   selector: 'app-user-item',
@@ -9,8 +11,17 @@ import { User } from 'src/app/shared/models/user';
 export class UserItemComponent implements OnInit {
   @Input() user: User;
   @Input() index: number;
+  public isMobile: boolean;
 
-  constructor() {}
+  constructor(private deviceService: DeviceDetectorService) {
+    this.isMobile = false;
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isMobile = this.deviceService.isMobile();
+  }
+
+  show(email: string) {
+    alert(email);
+  }
 }

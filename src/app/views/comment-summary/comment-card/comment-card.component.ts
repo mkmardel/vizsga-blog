@@ -13,8 +13,8 @@ import { UsersService } from 'src/app/shared/services/users.service';
 })
 export class CommentCardComponent implements OnInit {
   @Input() comment: Comment;
-  post: Post;
-  user: User;
+  public post: Post;
+  public user: User;
 
   constructor(
     private postService: PostService,

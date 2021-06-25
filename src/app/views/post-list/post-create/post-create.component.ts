@@ -20,11 +20,11 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   @Input() post: Post;
   @Output() closeForm = new EventEmitter();
   private subscription: Subscription;
-  formVisible: boolean;
-  submitted: boolean;
-  postForm: FormGroup;
-  user: User;
-  loggedIn: boolean;
+  public formVisible: boolean;
+  public submitted: boolean;
+  public postForm: FormGroup;
+  public user: User;
+  public loggedIn: boolean;
 
   constructor(
     private postService: PostService,
@@ -129,6 +129,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       this.pf.postBody.value
     );
     this.postService.addPost(newPost);
+    this.submitted = false;
+    this.postForm.reset();
+    this.toggleForm(false);
   }
 
   ngOnDestroy(): void {

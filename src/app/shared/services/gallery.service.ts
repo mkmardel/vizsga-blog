@@ -15,7 +15,7 @@ const API_URL = Constants.BASE_API_URL;
 })
 export class GalleryService {
   private _albums: Album[];
-  albumsFetched$: Subject<Album[]>;
+  public albumsFetched$: Subject<Album[]>;
 
   constructor(
     private http: HttpClient,

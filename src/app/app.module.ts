@@ -26,6 +26,8 @@ import { UserItemComponent } from './views/users/user-item/user-item.component';
 import { UserSelectComponent } from './views/users/user-select/user-select.component';
 import { GalleryItemComponent } from './views/gallery/gallery-item/gallery-item.component';
 import { GalleryModalComponent } from './shared/modals/gallery-modal/gallery-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,12 @@ import { GalleryModalComponent } from './shared/modals/gallery-modal/gallery-mod
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

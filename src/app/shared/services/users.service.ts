@@ -13,7 +13,7 @@ const API_URL: string = Constants.BASE_API_URL;
 })
 export class UsersService {
   private _users: User[];
-  usersChanged$: Subject<User[]>;
+  public usersChanged$: Subject<User[]>;
   constructor(private http: HttpClient, private modalService: ModalService) {
     this._users = [];
     this.usersChanged$ = new Subject<User[]>();

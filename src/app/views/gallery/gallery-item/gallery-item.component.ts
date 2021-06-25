@@ -13,7 +13,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 export class GalleryItemComponent implements OnInit {
   @Input() album: Album;
   private subscription: Subscription;
-  userName: string;
+  public userName: string;
 
   constructor(
     private authService: AuthService,

@@ -12,10 +12,10 @@ import { UsersService } from 'src/app/shared/services/users.service';
 })
 export class CommentListComponent implements OnInit, OnDestroy {
   @Input() postId: number;
-  comments: Comment[];
   private commentSubscription: Subscription;
   private routeSubscription: Subscription;
-  userId: number;
+  public userId: number;
+  public comments: Comment[];
 
   constructor(
     private commentService: CommentService,
@@ -50,7 +50,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
       let email = this.usersService.users.find(
         (user) => user.id == Number(this.userId) + 1
       ).email;
-      console.log(email);
 
       this.comments = this.commentService.comments.filter(
         (comment) => comment.email == email

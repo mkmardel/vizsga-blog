@@ -15,10 +15,10 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 export class CommentItemComponent implements OnInit, OnDestroy {
   @Input() comment: Comment;
   private subscription: Subscription;
-  isAdmin: boolean;
-  formVisible: boolean;
-  submitted: boolean;
-  commentForm: FormGroup;
+  public isAdmin: boolean;
+  public formVisible: boolean;
+  public submitted: boolean;
+  public commentForm: FormGroup;
 
   constructor(
     private authService: AuthService,

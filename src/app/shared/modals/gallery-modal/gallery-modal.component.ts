@@ -10,11 +10,11 @@ declare var $: any;
   styleUrls: ['./gallery-modal.component.scss'],
 })
 export class GalleryModalComponent implements OnInit {
-  albumId: number | null;
-  images: Photo[];
-  currentIndex: number;
-  isLoading: boolean;
-  slideIndex: number;
+  public albumId: number | null;
+  public images: Photo[];
+  public currentIndex: number;
+  public isLoading: boolean;
+
   constructor(
     private modalService: ModalService,
     private galleryService: GalleryService

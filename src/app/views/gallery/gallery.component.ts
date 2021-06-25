@@ -8,7 +8,7 @@ import { GalleryService } from 'src/app/shared/services/gallery.service';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
-  albums: Album[];
+  public albums: Album[];
 
   constructor(private galleryService: GalleryService) {}
 

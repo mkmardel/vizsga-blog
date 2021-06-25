@@ -15,7 +15,7 @@ declare var $: any;
 })
 export class LoadingModalComponent implements OnInit, OnDestroy {
   private subscriptions: Object;
-  title: string;
+  public title: string;
 
   constructor(
     private modalService: ModalService,
