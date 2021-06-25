@@ -74,7 +74,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    let newId = this.postService.posts.length + 1;
+    let newId = this.commentService.comments.length + 1;
     let newComment = new Comment(
       this.post.id,
       newId,
@@ -82,6 +82,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
       this.loggedInUser.email,
       text
     );
+
     this.commentService.addComment(newComment);
     this.commentInput.nativeElement.value = '';
   }
