@@ -31,6 +31,9 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions['loading'] =
       this.modalService.LoadingModalState.subscribe((data) => {
+        if (!data) {
+          this.close();
+        }
         this.title = data?.title;
         $('#loadingModal').modal('show');
         setTimeout(() => {
@@ -39,22 +42,22 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions['posts'] = this.postService.postsChanged$
-      .pipe(auditTime(500))
+      .pipe(auditTime(1000))
       .subscribe(() => {
         this.close();
       });
     this.subscriptions['comments'] = this.commentService.commentsChanged$
-      .pipe(auditTime(500))
+      .pipe(auditTime(1000))
       .subscribe(() => {
         this.close();
       });
     this.subscriptions['users'] = this.usersService.usersChanged$
-      .pipe(auditTime(500))
+      .pipe(auditTime(1000))
       .subscribe(() => {
         this.close();
       });
     this.subscriptions['albums'] = this.galleryService.albumsFetched$
-      .pipe(auditTime(500))
+      .pipe(auditTime(1000))
       .subscribe(() => {
         this.close();
       });
