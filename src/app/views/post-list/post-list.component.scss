@@ -22,7 +22,8 @@ select.form-control:not([size]):not([multiple]) {
 .timeline:before {
   content: "";
   position: absolute;
-  top: 0px;
+  top: -5px;
+  left: 10.5px;
   bottom: 0px;
   width: 5px;
   background: #2d353c;
@@ -36,7 +37,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .timeline .timeline-icon {
-  left: -11px;
+  left: 0px;
   position: absolute;
   width: 10%;
   top: 22px;
@@ -58,7 +59,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .timeline .timeline-body {
   margin-left: 40px;
-  margin-right: 17%;
+  // margin-right: 7.9%;
   background: #fff;
   position: relative;
   padding: 20px 25px;
@@ -75,9 +76,10 @@ select.form-control:not([size]):not([multiple]) {
   top: 20px;
 }
 
-@media only screen and (max-width: 476px) {
+@media only screen and (max-width: 575px) {
   .post-content {
-    margin-left: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
