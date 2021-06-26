@@ -1,12 +1,15 @@
 <div class="row">
   <div class="col-md-12 post-content">
     <app-post-create (applyFilter)="applyFilter($event)"></app-post-create>
-    <ul class="timeline" *ngFor="let post of posts | ownPosts: filterPosts">
+    <ul
+      class="timeline"
+      *ngFor="let post of posts | ownPosts: filterPosts; let i = index"
+    >
       <li>
         <div class="timeline-icon">
           <a>&nbsp;</a>
         </div>
-        <div class="timeline-body">
+        <div class="timeline-body" id="post{{ post.id }}">
           <app-post-item [post]="post"></app-post-item>
         </div>
       </li>

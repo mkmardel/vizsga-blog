@@ -22,6 +22,11 @@ const routes: Routes = [
     resolve: [UsersResolver, CommentsResolver, PostsResolver],
   },
   {
+    path: 'posts/:id',
+    component: PostListComponent,
+    resolve: [UsersResolver, CommentsResolver, PostsResolver],
+  },
+  {
     path: 'comments',
     component: CommentSummaryComponent,
     resolve: [UsersResolver, PostsResolver, CommentsResolver],

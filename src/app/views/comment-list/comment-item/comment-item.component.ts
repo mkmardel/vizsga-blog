@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comment } from 'src/app/shared/models/comment';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -22,7 +23,8 @@ export class CommentItemComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private commentService: CommentService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) {
     this.isAdmin = false;
     this.formVisible = false;
@@ -40,6 +42,10 @@ export class CommentItemComponent implements OnInit, OnDestroy {
 
   get cf() {
     return this.commentForm.controls;
+  }
+
+  isPosts() {
+    return this.router.url.indexOf('/posts') > -1;
   }
 
   initForm() {

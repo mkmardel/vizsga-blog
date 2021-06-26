@@ -3,6 +3,13 @@
 <span style="font-size: 13px">
   <strong>{{ comment.email }}</strong>
   <div *ngIf="isAdmin" class="btn-group mb-1">
+    <button
+      *ngIf="!isPosts()"
+      class="btn btn-primary btn-sm"
+      routerLink="/posts/{{ comment.postId }}"
+    >
+      <i class="bi bi-pin"></i>
+    </button>
     <button class="btn btn-success btn-sm" (click)="editComment()">
       <i class="bi bi-pencil-square"></i>
     </button>

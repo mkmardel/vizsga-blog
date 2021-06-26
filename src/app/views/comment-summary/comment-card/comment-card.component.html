@@ -17,7 +17,13 @@
         <span class="marker"
           ><i class="bi bi-blockquote-left"></i>&nbsp;&nbsp;Poszt:</span
         >
-        {{ post.title }}
+        {{ post.title }} <br />
+        <button
+          class="btn btn-primary btn-sm mt-2"
+          routerLink="/posts/{{ comment.postId }}"
+        >
+          <i class="bi bi-geo"></i>&nbsp;&nbsp;Ugrás a poszthoz
+        </button>
       </div>
     </div>
   </div>

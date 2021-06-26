@@ -80,3 +80,36 @@ select.form-control:not([size]):not([multiple]) {
     margin-left: 12px;
   }
 }
+
+.highlighted {
+  animation: highl 0.8s ease-in;
+  -webkit-animation: highl 0.8s ease-in;
+  animation-iteration-count: 3;
+}
+
+@keyframes highl {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes highl {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
