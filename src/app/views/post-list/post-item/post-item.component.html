@@ -1,6 +1,4 @@
 <div class="timeline-header">
-  <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
-  <span class="username">{{ user.name }}</span>
   <div *ngIf="ownPost" class="btn-group">
     <div class="btn btn-success btn-sm" (click)="editPost()">
       <i class="bi bi-pencil-square"></i>
@@ -9,11 +7,12 @@
       <i class="bi bi-trash"></i>
     </div>
   </div>
+  <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
+  <span class="username">{{ user.name }}</span>
 </div>
 <div class="timeline-content" *ngIf="!isUpdating">
   <br />
-  <strong>{{ post.title }}</strong>
-  <br />
+  <strong style="display: block; margin-bottom: 10px">{{ post.title }}</strong>
   <p>
     {{ post.body }}
   </p>
