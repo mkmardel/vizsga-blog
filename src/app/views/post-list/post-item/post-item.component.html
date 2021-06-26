@@ -2,8 +2,8 @@
   <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
   <span class="username">{{ user.name }}</span>
   <div *ngIf="ownPost" class="btn-group">
-    <div class="btn btn-success btn-sm">
-      <i class="bi bi-pencil-square" (click)="editPost()"></i>
+    <div class="btn btn-success btn-sm" (click)="editPost()">
+      <i class="bi bi-pencil-square"></i>
     </div>
     <div class="btn btn-danger btn-sm" (click)="deletePost()">
       <i class="bi bi-trash"></i>

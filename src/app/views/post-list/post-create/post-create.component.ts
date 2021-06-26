@@ -129,9 +129,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       this.updatePost();
       return;
     }
-    let id = this.postService.posts.length + 1;
     let newPost = new Post(
-      id,
       this.user?.id,
       this.pf.postTitle.value,
       this.pf.postBody.value

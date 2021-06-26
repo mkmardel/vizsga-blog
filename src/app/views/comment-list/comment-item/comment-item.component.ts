@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { Comment } from 'src/app/shared/models/comment';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommentService } from 'src/app/shared/services/comment.service';

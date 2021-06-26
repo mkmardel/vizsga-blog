@@ -39,17 +39,17 @@ export class Comment {
     this._body = v;
   }
 
-  constructor(
-    postId: number,
-    id: number,
-    name: string,
-    email: string,
-    body: string
-  ) {
+  constructor(postId: number, email: string, body: string) {
     this._postId = postId;
-    this._id = id;
-    this._name = name;
     this._email = email;
     this._body = body;
+  }
+
+  commentToObject(): any {
+    return {
+      postId: this.postId,
+      email: this.email,
+      body: this.body,
+    };
   }
 }

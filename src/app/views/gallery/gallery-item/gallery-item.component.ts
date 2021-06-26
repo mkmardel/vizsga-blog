@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Album } from 'src/app/shared/models/album';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { GalleryService } from 'src/app/shared/services/gallery.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
@@ -12,7 +10,6 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 })
 export class GalleryItemComponent implements OnInit {
   @Input() album: Album;
-  private subscription: Subscription;
   public userName: string;
 
   constructor(

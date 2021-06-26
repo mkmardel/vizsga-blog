@@ -4,7 +4,8 @@
 
 .short-text {
   white-space: nowrap;
-  width: 265px;
+  // width: 265px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }

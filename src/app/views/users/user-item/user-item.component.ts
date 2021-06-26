@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { User } from 'src/app/shared/models/user';
-declare var $: any;
 
 @Component({
   selector: 'app-user-item',

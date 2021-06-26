@@ -31,10 +31,17 @@ export class Post {
     this._body = v;
   }
 
-  constructor(id: number, userId: number, title: string, body: string) {
-    this._id = id;
+  constructor(userId: number, title: string, body: string) {
     this._userId = userId;
     this._title = title;
     this._body = body;
+  }
+
+  postToObject(): any {
+    return {
+      userId: this.userId,
+      title: this.title,
+      body: this.body,
+    };
   }
 }

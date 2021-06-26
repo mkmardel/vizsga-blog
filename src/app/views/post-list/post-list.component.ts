@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/shared/models/post';
-import { ModalService } from 'src/app/shared/services/modal.service';
 import { PostService } from 'src/app/shared/services/post.service';
 
 @Component({
@@ -14,10 +13,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   public posts: Post[];
   public filterPosts: boolean;
 
-  constructor(
-    private postService: PostService,
-    private modalService: ModalService
-  ) {
+  constructor(private postService: PostService) {
     this.posts = [];
     this.filterPosts = false;
   }
@@ -26,7 +22,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.posts = this.postService.posts;
     this.postsSubscription = this.postService.postsChanged$.subscribe(
       (posts) => {
-        this.posts = posts;
+        this.posts = [...posts];
       }
     );
   }

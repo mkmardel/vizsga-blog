@@ -15,7 +15,7 @@
         <div class="header">
           <strong
             ><i class="bi bi-chat-right-quote"></i>&nbsp;&nbsp;{{
-              images[currentIndex].title
+              images[currentIndex]?.title
             }}</strong
           >
           <span class="btn-close" (click)="close()"></span>
@@ -30,7 +30,7 @@
                 <img
                   id="mainImage"
                   class="img-fluid"
-                  [src]="images[currentIndex].url"
+                  [src]="images[currentIndex]?.url"
                   width="55%"
                   height="55%"
                   alt="image"
