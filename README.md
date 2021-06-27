@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 E-mail: "Sincere@april.biz" <br>
 Password: "Leanne Graham"
 
-## Low level User login etails example
+## Low level User login details example
 
 E-mail: "Shanna@melissa.tv" <br>
 Password: "Ervin Howell"
