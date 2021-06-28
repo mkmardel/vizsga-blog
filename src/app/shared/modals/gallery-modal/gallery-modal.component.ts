@@ -27,6 +27,7 @@ export class GalleryModalComponent implements OnInit {
   ngOnInit(): void {
     this.modalService.GalleryModalState.subscribe((data) => {
       this.albumId = data?.albumId;
+      this.currentIndex = 0;
       $('#galleryModal').modal('show');
 
       if (this.albumId) {
