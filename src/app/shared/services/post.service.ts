@@ -44,7 +44,7 @@ export class PostService {
     this.http
       .post<Post>(`${API_URL}/posts`, newPost.postToObject(), httpOptions)
       .subscribe((post) => {
-        this.posts.unshift(newPost);
+        this.posts.unshift(post);
         this.postsChanged$.next(this.posts);
         this.modalService.showAlertModal(
           'Sikeresen létrehoztál egy új bejegyzést!',
