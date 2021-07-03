@@ -30,9 +30,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
 
   constructor(
     private postService: PostService,
-    private authService: AuthService,
-    private commentService: CommentService,
-    private modalService: ModalService
+    private authService: AuthService
   ) {
     this.formVisible = false;
     this.submitted = false;

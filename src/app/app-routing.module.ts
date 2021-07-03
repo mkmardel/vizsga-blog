@@ -40,7 +40,7 @@ const routes: Routes = [
     children: [
       { path: '', component: UserSelectComponent },
       {
-        path: ':id',
+        path: ':uid',
         component: CommentListComponent,
         resolve: [CommentsResolver, UsersResolver],
       },

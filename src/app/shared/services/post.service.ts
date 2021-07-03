@@ -43,15 +43,24 @@ export class PostService {
   addPost(newPost: Post) {
     this.http
       .post<Post>(`${API_URL}/posts`, newPost.postToObject(), httpOptions)
-      .subscribe((post) => {
-        this.posts.unshift(post);
-        this.postsChanged$.next(this.posts);
-        this.modalService.showAlertModal(
-          'Sikeresen létrehoztál egy új bejegyzést!',
-          null,
-          'success'
-        );
-      });
+      .subscribe(
+        (post) => {
+          this.posts.unshift(post);
+          this.postsChanged$.next(this.posts);
+          this.modalService.showAlertModal(
+            'Sikeresen létrehoztál egy új bejegyzést!',
+            null,
+            'success'
+          );
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 
   updatePost(updatedPost: Post) {
@@ -64,16 +73,25 @@ export class PostService {
 
     this.http
       .put<Post>(`${API_URL}/posts/${redefinedId}`, updatedPost, httpOptions)
-      .subscribe((post) => {
-        let index = this.posts.indexOf(updatedPost);
-        this.posts[index] = updatedPost;
-        this.postsChanged$.next(this.posts);
-        this.modalService.showAlertModal(
-          'Sikeresen módosítottad a bejegyzést!',
-          null,
-          'success'
-        );
-      });
+      .subscribe(
+        (post) => {
+          let index = this.posts.indexOf(updatedPost);
+          this.posts[index] = updatedPost;
+          this.postsChanged$.next(this.posts);
+          this.modalService.showAlertModal(
+            'Sikeresen módosítottad a bejegyzést!',
+            null,
+            'success'
+          );
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 
   deletePost(id: number) {
@@ -84,12 +102,19 @@ export class PostService {
      */
     let redefinedId = id > 100 ? 100 : id;
 
-    this.http
-      .delete(`${API_URL}/posts/${redefinedId}`, httpOptions)
-      .subscribe(() => {
+    this.http.delete(`${API_URL}/posts/${redefinedId}`, httpOptions).subscribe(
+      () => {
         let index = this.posts.findIndex((post) => post.id == id);
         this.posts.splice(index, 1);
         this.postsChanged$.next(this.posts);
-      });
+      },
+      (err) => {
+        this.modalService.showAlertModal(
+          `Hiba történt! (${err.message})`,
+          null,
+          'error'
+        );
+      }
+    );
   }
 }

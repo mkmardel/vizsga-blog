@@ -48,10 +48,19 @@ export class CommentService {
         newComment.commentToObject(),
         httpOptions
       )
-      .subscribe((comment) => {
-        this.comments.push(comment);
-        this.commentsChanged$.next(this.comments);
-      });
+      .subscribe(
+        (comment) => {
+          this.comments.push(comment);
+          this.commentsChanged$.next(this.comments);
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 
   updateComment(updatedComment: Comment) {
@@ -68,16 +77,25 @@ export class CommentService {
         updatedComment,
         httpOptions
       )
-      .subscribe((comment) => {
-        let index = this.comments.indexOf(updatedComment);
-        this.comments[index] = updatedComment;
-        this.commentsChanged$.next(this.comments);
-        this.modalService.showAlertModal(
-          'Sikeresen módosítottad a kommentet!',
-          null,
-          'success'
-        );
-      });
+      .subscribe(
+        (comment) => {
+          let index = this.comments.indexOf(updatedComment);
+          this.comments[index] = updatedComment;
+          this.commentsChanged$.next(this.comments);
+          this.modalService.showAlertModal(
+            'Sikeresen módosítottad a kommentet!',
+            null,
+            'success'
+          );
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 
   deleteComment(id: number) {
@@ -90,10 +108,19 @@ export class CommentService {
 
     this.http
       .delete(`${API_URL}/comments/${redefinedId}`, httpOptions)
-      .subscribe(() => {
-        let index = this.comments.findIndex((comment) => comment.id == id);
-        this.comments.splice(index, 1);
-        this.commentsChanged$.next(this.comments);
-      });
+      .subscribe(
+        () => {
+          let index = this.comments.findIndex((comment) => comment.id == id);
+          this.comments.splice(index, 1);
+          this.commentsChanged$.next(this.comments);
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 }

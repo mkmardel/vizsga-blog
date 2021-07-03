@@ -27,7 +27,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe((params) => {
-      this.userId = params['id'];
+      this.userId = params['uid'];
       this.getData();
     });
 
