@@ -50,6 +50,9 @@ export class CommentService {
       )
       .subscribe(
         (comment) => {
+          //A JSON placeholder mindig 501-es id-t ad vissza
+          comment.id = this.comments.length + 1;
+
           this.comments.push(comment);
           this.commentsChanged$.next(this.comments);
         },

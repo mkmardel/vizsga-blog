@@ -45,6 +45,9 @@ export class PostService {
       .post<Post>(`${API_URL}/posts`, newPost.postToObject(), httpOptions)
       .subscribe(
         (post) => {
+          //A JSON placeholder mindig 101-es id-t ad vissza
+          post.id = this.posts.length + 1;
+
           this.posts.unshift(post);
           this.postsChanged$.next(this.posts);
           this.modalService.showAlertModal(
