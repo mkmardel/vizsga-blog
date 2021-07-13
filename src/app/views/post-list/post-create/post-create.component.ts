@@ -20,13 +20,17 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   @Input() post: Post;
   @Output() closeForm = new EventEmitter();
   @Output() applyFilter = new EventEmitter<boolean>();
-  private subscription: Subscription;
+  private userSubscription: Subscription;
+  private postSubscription: Subscription;
   public formVisible: boolean;
   public submitted: boolean;
   public postForm: FormGroup;
   public user: User;
   public loggedIn: boolean;
   public filtered: boolean;
+  public isSubmitting: boolean;
+  public refreshInterval: any;
+  public seconds: number;
 
   constructor(
     private postService: PostService,
@@ -36,6 +40,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     this.submitted = false;
     this.loggedIn = false;
     this.filtered = false;
+    this.isSubmitting = false;
+    this.refreshInterval = null;
+    this.seconds = 60;
   }
 
   ngOnInit(): void {
@@ -54,6 +61,15 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       this.postForm.controls['postBody'].setValue(this.post.body);
       this.formVisible = true;
     }
+
+    this.postSubscription = this.postService.postsChanged$.subscribe(() => {
+      this.isSubmitting = false;
+      if (this.isUpdating) {
+        this.closeForm.emit();
+      }
+      this.postForm.reset();
+      this.toggleForm(false);
+    });
   }
 
   get pf() {
@@ -115,7 +131,6 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     updatedPost.title = this.pf.postTitle.value;
     updatedPost.body = this.pf.postBody.value;
     this.postService.updatePost(updatedPost);
-    this.closeForm.emit();
   }
 
   onSubmit() {
@@ -123,6 +138,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     if (this.postForm.invalid) {
       return;
     }
+    this.isSubmitting = true;
     if (this.isUpdating) {
       this.updatePost();
       return;
@@ -134,11 +150,22 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     );
     this.postService.addPost(newPost);
     this.submitted = false;
-    this.postForm.reset();
-    this.toggleForm(false);
+  }
+
+  reloadPosts() {
+    this.postService.fetchPosts();
+    this.refreshInterval = setInterval(() => {
+      this.seconds--;
+      if (this.seconds == 0) {
+        clearInterval(this.refreshInterval);
+        this.refreshInterval = null;
+        this.seconds = 60;
+      }
+    }, 1000);
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
+    this.postSubscription?.unsubscribe();
   }
 }

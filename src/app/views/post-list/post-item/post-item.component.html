@@ -3,9 +3,16 @@
     <div class="btn btn-success btn-sm" (click)="editPost()">
       <i class="bi bi-pencil-square"></i>
     </div>
-    <div class="btn btn-danger btn-sm" (click)="deletePost()">
-      <i class="bi bi-trash"></i>
-    </div>
+    <button
+      class="btn btn-danger btn-sm"
+      [disabled]="isDeleting"
+      (click)="deletePost()"
+    >
+      <span *ngIf="!isDeleting"><i class="bi bi-trash"></i></span>
+      <span *ngIf="isDeleting"
+        ><img src="assets/img/loading_btn.gif" height="15px"
+      /></span>
+    </button>
   </div>
   <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
   <span class="username">{{ user.name }}</span>
@@ -54,8 +61,12 @@
             class="btn btn-primary f-s-12"
             type="button"
             (click)="submitComment(commentInput.value)"
+            [disabled]="isSubmitting"
           >
-            <i class="bi bi-chat-dots"></i>
+            <span *ngIf="!isSubmitting"><i class="bi bi-chat-dots"></i></span>
+            <span *ngIf="isSubmitting"
+              ><img src="assets/img/loading_btn.gif" height="21px"
+            /></span>
           </button>
         </span>
       </div>

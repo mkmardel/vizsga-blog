@@ -44,11 +44,8 @@ export class PostService {
     this.http
       .post<Post>(`${API_URL}/posts`, newPost.postToObject(), httpOptions)
       .subscribe(
-        (post) => {
-          //A JSON placeholder mindig 101-es id-t ad vissza
-          post.id = this.posts.length + 1;
-
-          this.posts.unshift(post);
+        (postData) => {
+          this.posts.unshift(postData);
           this.postsChanged$.next(this.posts);
           this.modalService.showAlertModal(
             'Sikeresen létrehoztál egy új bejegyzést!',
@@ -67,19 +64,12 @@ export class PostService {
   }
 
   updatePost(updatedPost: Post) {
-    /**
-     * Egy újonnan hozzáadott poszt ID-ja 100-nál nagyobb lenne, de a
-     * JSON placeholder API valójában nem hoz létre új posztot.
-     * Így viszont HTTP Error lenne 100-nál nagyobb ID esetén.
-     */
-    let redefinedId = updatedPost.id > 100 ? 100 : updatedPost.id;
-
     this.http
-      .put<Post>(`${API_URL}/posts/${redefinedId}`, updatedPost, httpOptions)
+      .put<Post>(`${API_URL}/posts/${updatedPost.id}`, updatedPost, httpOptions)
       .subscribe(
-        (post) => {
-          let index = this.posts.indexOf(updatedPost);
-          this.posts[index] = updatedPost;
+        (postData) => {
+          let index = this.posts.findIndex((post) => post.id === postData.id);
+          this.posts[index] = postData;
           this.postsChanged$.next(this.posts);
           this.modalService.showAlertModal(
             'Sikeresen módosítottad a bejegyzést!',
@@ -98,26 +88,21 @@ export class PostService {
   }
 
   deletePost(id: number) {
-    /**
-     * Egy újonnan hozzáadott poszt ID-ja 100-nál nagyobb lenne, de a
-     * JSON placeholder API valójában nem hoz létre új posztot.
-     * Így viszont HTTP Error lenne 100-nál nagyobb ID esetén.
-     */
-    let redefinedId = id > 100 ? 100 : id;
-
-    this.http.delete(`${API_URL}/posts/${redefinedId}`, httpOptions).subscribe(
-      () => {
-        let index = this.posts.findIndex((post) => post.id == id);
-        this.posts.splice(index, 1);
-        this.postsChanged$.next(this.posts);
-      },
-      (err) => {
-        this.modalService.showAlertModal(
-          `Hiba történt! (${err.message})`,
-          null,
-          'error'
-        );
-      }
-    );
+    this.http
+      .delete<{ id: number }>(`${API_URL}/posts/${id}`, httpOptions)
+      .subscribe(
+        (res) => {
+          let index = this.posts.findIndex((post) => post.id == res.id);
+          this.posts.splice(index, 1);
+          this.postsChanged$.next(this.posts);
+        },
+        (err) => {
+          this.modalService.showAlertModal(
+            `Hiba történt! (${err.message})`,
+            null,
+            'error'
+          );
+        }
+      );
   }
 }

@@ -49,11 +49,8 @@ export class CommentService {
         httpOptions
       )
       .subscribe(
-        (comment) => {
-          //A JSON placeholder mindig 501-es id-t ad vissza
-          comment.id = this.comments.length + 1;
-
-          this.comments.push(comment);
+        (commentData) => {
+          this.comments.push(commentData);
           this.commentsChanged$.next(this.comments);
         },
         (err) => {
@@ -67,23 +64,18 @@ export class CommentService {
   }
 
   updateComment(updatedComment: Comment) {
-    /**
-     * Egy újonnan hozzáadott komment ID-ja 500-nál nagyobb lenne, de a
-     * JSON placeholder API valójában nem hoz létre új kommentet.
-     * Így viszont HTTP Error lenne 500-nál nagyobb ID esetén.
-     */
-    let redefinedId = updatedComment.id > 500 ? 500 : updatedComment.id;
-
     this.http
       .put<Comment>(
-        `${API_URL}/comments/${redefinedId}`,
+        `${API_URL}/comments/${updatedComment.id}`,
         updatedComment,
         httpOptions
       )
       .subscribe(
-        (comment) => {
-          let index = this.comments.indexOf(updatedComment);
-          this.comments[index] = updatedComment;
+        (commentData) => {
+          let index = this.comments.findIndex(
+            (comment) => comment.id === commentData.id
+          );
+          this.comments[index] = commentData;
           this.commentsChanged$.next(this.comments);
           this.modalService.showAlertModal(
             'Sikeresen módosítottad a kommentet!',
@@ -102,18 +94,13 @@ export class CommentService {
   }
 
   deleteComment(id: number) {
-    /**
-     * Egy újonnan hozzáadott komment ID-ja 500-nál nagyobb lenne, de a
-     * JSON placeholder API valójában nem hoz létre új kommentet.
-     * Így viszont HTTP Error lenne 500-nál nagyobb ID esetén.
-     */
-    let redefinedId = id > 500 ? 500 : id;
-
     this.http
-      .delete(`${API_URL}/comments/${redefinedId}`, httpOptions)
+      .delete<{ id: number }>(`${API_URL}/comments/${id}`, httpOptions)
       .subscribe(
-        () => {
-          let index = this.comments.findIndex((comment) => comment.id == id);
+        (res) => {
+          let index = this.comments.findIndex(
+            (comment) => comment.id == res.id
+          );
           this.comments.splice(index, 1);
           this.commentsChanged$.next(this.comments);
         },

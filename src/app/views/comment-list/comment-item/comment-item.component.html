@@ -12,8 +12,15 @@
     <button class="btn btn-success btn-sm" (click)="editComment()">
       <i class="bi bi-pencil-square"></i>
     </button>
-    <button class="btn btn-danger btn-sm" (click)="deleteComment()">
-      <i class="bi bi-trash"></i>
+    <button
+      class="btn btn-danger btn-sm"
+      [disabled]="isDeleting"
+      (click)="deleteComment()"
+    >
+      <span *ngIf="!isDeleting"><i class="bi bi-trash"></i></span>
+      <span *ngIf="isDeleting"
+        ><img src="assets/img/loading_btn.gif" height="15px"
+      /></span>
     </button>
   </div>
   <strong>{{ comment.email }}</strong>
@@ -49,8 +56,17 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <button type="submit" class="btn btn-success">
-            <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></button
+          <button
+            type="submit"
+            [disabled]="isSubmitting"
+            class="btn btn-success"
+          >
+            <span *ngIf="!isSubmitting">
+              <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></span
+            >
+            <span *ngIf="isSubmitting"
+              ><img src="assets/img/loading_btn.gif" height="21px"
+            /></span></button
           >&nbsp;&nbsp;
           <button
             type="button"

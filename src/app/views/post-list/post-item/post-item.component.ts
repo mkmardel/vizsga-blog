@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Comment } from 'src/app/shared/models/comment';
 import { Post } from 'src/app/shared/models/post';
 import { User } from 'src/app/shared/models/user';
@@ -26,11 +27,14 @@ export class PostItemComponent implements OnInit, OnDestroy {
   @ViewChild('commentInput') commentInput: ElementRef;
   private loggedInUser: User;
   private userSubscription: Subscription;
+  private commentsSubscription: Subscription;
   public showComments: boolean;
   public user: User;
   public loggedIn: boolean;
   public ownPost: boolean;
   public isUpdating: boolean;
+  public isSubmitting: boolean;
+  public isDeleting: boolean;
 
   constructor(
     private userService: UsersService,
@@ -43,6 +47,8 @@ export class PostItemComponent implements OnInit, OnDestroy {
     this.loggedIn = false;
     this.ownPost = false;
     this.isUpdating = false;
+    this.isSubmitting = false;
+    this.isDeleting = false;
   }
 
   ngOnInit(): void {
@@ -57,6 +63,12 @@ export class PostItemComponent implements OnInit, OnDestroy {
         this.loggedInUser = user;
         this.loggedIn = user != null;
         this.ownPost = this.user.id == user?.id;
+      }
+    );
+
+    this.commentsSubscription = this.commentService.commentsChanged$.subscribe(
+      () => {
+        this.isSubmitting = false;
       }
     );
   }
@@ -74,6 +86,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    this.isSubmitting = true;
     let newComment = new Comment(this.post.id, this.loggedInUser.email, text);
     this.commentService.addComment(newComment);
     this.commentInput.nativeElement.value = '';
@@ -104,8 +117,9 @@ export class PostItemComponent implements OnInit, OnDestroy {
 
   deletePost() {
     if (this.validateAction(true)) {
-      this.modalService.ConfirmState.forEach((state) => {
+      this.modalService.ConfirmState.pipe(take(1)).forEach((state) => {
         if (state.action == 'delete_post' && state.id == this.post.id) {
+          this.isDeleting = true;
           this.postService.deletePost(this.post.id);
         }
       });
@@ -120,5 +134,6 @@ export class PostItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.commentsSubscription.unsubscribe();
   }
 }

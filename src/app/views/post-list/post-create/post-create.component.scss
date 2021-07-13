@@ -3,6 +3,16 @@
   margin-bottom: 5px;
 }
 
+@media (max-width: 434px) {
+  .menu-btn {
+    width: 100%;
+  }
+
+  .menu-btn:nth-child(2) {
+    margin-top: -20px !important;
+  }
+}
+
 .input-group-text {
   border-radius: 4px 0 0 4px;
 }
