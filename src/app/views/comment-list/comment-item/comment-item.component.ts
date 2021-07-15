@@ -77,7 +77,7 @@ export class CommentItemComponent implements OnInit, OnDestroy {
   deleteComment() {
     this.modalService.ConfirmState.pipe(take(1)).forEach((state) => {
       if (state.action == 'delete_comment' && this.comment.id == state.id) {
-        this.isDeleting = true;
+        this.showSpinner();
         this.commentService.deleteComment(this.comment.id);
       }
     });
@@ -87,6 +87,14 @@ export class CommentItemComponent implements OnInit, OnDestroy {
       'confirm',
       this.comment.id
     );
+  }
+
+  showSpinner() {
+    this.isDeleting = true;
+    // response error offset
+    setTimeout(() => {
+      this.isDeleting = false;
+    }, 10000);
   }
 
   onSubmit() {

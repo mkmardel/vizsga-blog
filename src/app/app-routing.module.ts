@@ -6,6 +6,7 @@ import { CommentsResolver } from './shared/resolvers/comments.resolver';
 import { GalleryResolver } from './shared/resolvers/gallery.resolver';
 import { PostsResolver } from './shared/resolvers/posts.resolver';
 import { UsersResolver } from './shared/resolvers/users.resolver';
+import { AccountComponent } from './views/account/account.component';
 import { CommentListComponent } from './views/comment-list/comment-list.component';
 import { CommentSummaryComponent } from './views/comment-summary/comment-summary.component';
 import { GalleryComponent } from './views/gallery/gallery.component';
@@ -50,6 +51,11 @@ const routes: Routes = [
     path: 'gallery',
     component: GalleryComponent,
     resolve: [GalleryResolver],
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
     canActivate: [AuthGuard],
   },
   { path: '', component: HomeComponent, pathMatch: 'full' },

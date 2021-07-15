@@ -1,18 +1,34 @@
 <div class="row">
   <div class="col-md-12 post-content">
     <app-post-create (applyFilter)="applyFilter($event)"></app-post-create>
-    <ul
-      class="timeline"
-      *ngFor="let post of posts | ownPosts: filterPosts; let i = index"
-    >
-      <li>
-        <div class="timeline-icon">
-          <a>&nbsp;</a>
+    <div *ngIf="posts | ownPosts: filterPosts as result">
+      <ul class="timeline" *ngFor="let post of result; let i = index">
+        <li>
+          <div class="timeline-icon">
+            <a>&nbsp;</a>
+          </div>
+          <div class="timeline-body" id="post{{ post.id }}">
+            <app-post-item [post]="post"></app-post-item>
+          </div>
+        </li>
+      </ul>
+      <ul *ngIf="!result.length" class="timeline">
+        <li>
+          <div class="timeline-icon">
+            <a>&nbsp;</a>
+          </div>
+          <div class="timeline-body">
+            <i class="bi bi-exclamation-diamond"></i>&nbsp;&nbsp;Nincs
+            megjeleníthető poszt!
+          </div>
+        </li>
+      </ul>
+      <!-- <div class="card mt-1" *ngIf="!result.length">
+        <div class="card-body">
+          <i class="bi bi-exclamation-diamond"></i>&nbsp;&nbsp;Nincs
+          megjeleníthető poszt!
         </div>
-        <div class="timeline-body" id="post{{ post.id }}">
-          <app-post-item [post]="post"></app-post-item>
-        </div>
-      </li>
-    </ul>
+      </div> -->
+    </div>
   </div>
 </div>

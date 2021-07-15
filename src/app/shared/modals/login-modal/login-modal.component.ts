@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UsersService } from '../../services/users.service';
-import { User } from '../../models/user';
+import { Subscription } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -11,7 +11,8 @@ declare var $: any;
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss'],
 })
-export class LoginModalComponent implements OnInit {
+export class LoginModalComponent implements OnInit, OnDestroy {
+  private userSubscription: Subscription;
   public loginForm: FormGroup;
   public submitted: boolean;
   public isLoading: boolean;
@@ -94,7 +95,7 @@ export class LoginModalComponent implements OnInit {
       name: this.lf.password.value,
       username: this.lf.username.value,
     };
-    this.usersService.addUser(userData).subscribe(
+    this.userSubscription = this.usersService.addUser(userData).subscribe(
       (user) => {
         this.isLoading = false;
         this.isRegistration = true;
@@ -138,5 +139,9 @@ export class LoginModalComponent implements OnInit {
 
   close() {
     $('#loginModal').modal('hide');
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
   }
 }

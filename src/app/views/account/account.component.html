@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-person-circle"></i>&nbsp;&nbsp;Fiókom adatai
+          <ul class="list-group mt-3">
+            <li class="list-group-item disabled">
+              <div class="list-title">E-mail cím:</div>
+              {{ loggedInUser.email }}
+            </li>
+            <li class="list-group-item disabled">
+              <div class="list-title">Teljes név:</div>
+              {{ loggedInUser.name }}
+            </li>
+            <li class="list-group-item disabled">
+              <div class="list-title">Felhasználónév:</div>
+              {{ loggedInUser.username }}
+            </li>
+          </ul>
+          <button
+            [disabled]="isDeleting"
+            (click)="closeAccount()"
+            class="btn btn-danger mt-3"
+          >
+            <span *ngIf="!isDeleting"
+              ><i class="bi bi-trash"></i>&nbsp;&nbsp;Fiók törlése</span
+            >
+            <span *ngIf="isDeleting"
+              ><img src="assets/img/loading_btn.gif" height="15px"
+            /></span>
+          </button>
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 mt-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-person-bounding-box"></i>&nbsp;&nbsp;Profilkép
+        </h5>
+        <div style="position: relative" class="mt-3">
+          <img
+            [class.blurred]="isLoading"
+            src="{{
+              loggedInUser?.imageUrl
+                ? loggedInUser?.imageUrl
+                : 'assets/img/user.png'
+            }}"
+            height="256px"
+            width="256px"
+          />
+          <span *ngIf="isLoading">
+            <img src="assets/img/loading.gif" class="load-img" alt="loading" />
+          </span>
+        </div>
+        <hr />
+        <div class="cropper">
+          <h5 class="card-title">
+            <i class="bi bi-file-earmark-image"></i>&nbsp;&nbsp;Új profilkép
+          </h5>
+          <input class="mt-3" type="file" (change)="fileChangeEvent($event)" />
+          <div
+            [class.hidden]="!showCropper"
+            class="row"
+            style="margin-top: 15px"
+          >
+            <div class="text-center col-md-8">
+              <h5>Kivágás</h5>
+              <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 4"
+                [resizeToWidth]="256"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (loadImageFailed)="loadImageFailed()"
+              ></image-cropper>
+            </div>
+            <div class="text-center col-md-4">
+              <h5>Előnézet</h5>
+              <img [src]="croppedImage" />
+              <br />
+              <button
+                (click)="saveImage()"
+                [disabled]="isLoading"
+                class="btn btn-primary mt-4"
+                style="width: 256px"
+              >
+                <i class="bi bi-file-earmark-check"></i>&nbsp;&nbsp;Mentés
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

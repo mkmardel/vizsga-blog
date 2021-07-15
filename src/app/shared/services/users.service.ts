@@ -39,7 +39,8 @@ export class UsersService {
             user.username,
             user.name,
             user.email,
-            user.email === 'Sincere@april.biz' ? 'admin' : 'user'
+            user.email === 'Sincere@april.biz' ? 'admin' : 'user',
+            user.imageUrl
           );
         });
       }),
@@ -52,5 +53,26 @@ export class UsersService {
 
   addUser(newUserObj: any) {
     return this.http.post<User>(`${API_URL}/users`, newUserObj, httpOptions);
+  }
+
+  uploadUserImage(formData: any) {
+    return this.http.post<any>(`${API_URL}/users/image`, formData);
+  }
+
+  async setUserImage(id: number, url: string) {
+    if (this._users?.length == 0) {
+      await this.fetchUsers().toPromise();
+    }
+
+    let index = this._users.findIndex((user) => user.id == id);
+    this._users[index].imageUrl = url;
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify(this._users[index].userToObject())
+    );
+  }
+
+  removeUserAndData(id: number) {
+    return this.http.delete(`${API_URL}/users/${id}`, httpOptions);
   }
 }

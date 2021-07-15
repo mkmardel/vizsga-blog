@@ -25,7 +25,7 @@ import { UsersService } from 'src/app/shared/services/users.service';
 export class PostItemComponent implements OnInit, OnDestroy {
   @Input() post: Post;
   @ViewChild('commentInput') commentInput: ElementRef;
-  private loggedInUser: User;
+  public loggedInUser: User;
   private userSubscription: Subscription;
   private commentsSubscription: Subscription;
   public showComments: boolean;
@@ -119,7 +119,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
     if (this.validateAction(true)) {
       this.modalService.ConfirmState.pipe(take(1)).forEach((state) => {
         if (state.action == 'delete_post' && state.id == this.post.id) {
-          this.isDeleting = true;
+          this.showSpinner();
           this.postService.deletePost(this.post.id);
         }
       });
@@ -130,6 +130,14 @@ export class PostItemComponent implements OnInit, OnDestroy {
         this.post.id
       );
     }
+  }
+
+  showSpinner() {
+    this.isDeleting = true;
+    // response error offset
+    setTimeout(() => {
+      this.isDeleting = false;
+    }, 10000);
   }
 
   ngOnDestroy(): void {

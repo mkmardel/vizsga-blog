@@ -30,6 +30,18 @@ select.form-control:not([size]):not([multiple]) {
   margin-left: -2.5px;
 }
 
+.timeline:last-child:before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 10.5px;
+  bottom: 0px;
+  width: 5px;
+  background: #2d353c;
+  margin-left: -2.5px;
+  height: 35px;
+}
+
 .timeline > li {
   position: relative;
   min-height: 50px;

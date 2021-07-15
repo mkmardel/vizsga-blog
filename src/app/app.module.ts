@@ -30,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { OwnPostsPipe } from './shared/pipes/own-posts.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { AccountComponent } from './views/account/account.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     GalleryItemComponent,
     GalleryModalComponent,
     OwnPostsPipe,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

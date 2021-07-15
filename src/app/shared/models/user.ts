@@ -39,18 +39,28 @@ export class User {
     this._role = v;
   }
 
+  private _imageUrl: string;
+  public get imageUrl(): string {
+    return this._imageUrl;
+  }
+  public set imageUrl(v: string) {
+    this._imageUrl = v;
+  }
+
   constructor(
     id: number,
     username: string,
     name: string,
     email: string,
-    role: string
+    role: string,
+    imageUrl?: string
   ) {
     this._id = id;
     this._username = username;
     this._name = name;
     this._email = email;
     this._role = role;
+    this._imageUrl = imageUrl;
   }
 
   userToObject(): any {
@@ -60,6 +70,7 @@ export class User {
       email: this.email,
       username: this.username,
       role: this.role,
+      imageUrl: this.imageUrl,
     };
   }
 }

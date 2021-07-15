@@ -14,7 +14,11 @@
       /></span>
     </button>
   </div>
-  <span class="userimage"><img src="assets/img/user.png" alt="user" /></span>
+  <span class="userimage"
+    ><img
+      src="{{ user?.imageUrl ? user?.imageUrl : 'assets/img/user.png' }}"
+      alt="user"
+  /></span>
   <span class="username">{{ user.name }}</span>
 </div>
 <div class="timeline-content" *ngIf="!isUpdating">
