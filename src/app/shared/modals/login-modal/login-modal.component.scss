@@ -5,3 +5,20 @@
 .is-invalid {
   border-radius: 0 4px 4px 0 !important;
 }
+
+.float-right {
+  float: right;
+}
+
+.btn-reg {
+  cursor: pointer;
+}
+
+.btn-reg:hover {
+  color: gray;
+  transition: all 0.2s;
+}
+
+.hidden {
+  visibility: hidden;
+}

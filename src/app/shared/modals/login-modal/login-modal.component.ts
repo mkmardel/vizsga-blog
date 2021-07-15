@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UsersService } from '../../services/users.service';
+import { User } from '../../models/user';
 declare var $: any;
 
 @Component({
@@ -13,13 +15,16 @@ export class LoginModalComponent implements OnInit {
   public loginForm: FormGroup;
   public submitted: boolean;
   public isLoading: boolean;
+  public isRegistration: boolean;
 
   constructor(
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private usersService: UsersService
   ) {
     this.submitted = false;
     this.isLoading = false;
+    this.isRegistration = false;
   }
 
   ngOnInit(): void {
@@ -31,9 +36,10 @@ export class LoginModalComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(5),
       ]),
       remember: new FormControl(true),
+      username: new FormControl('', []),
     });
   }
 
@@ -48,30 +54,85 @@ export class LoginModalComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.submitted) {
-      this.authService
-        .login(
-          this.lf.email.value,
-          this.lf.password.value,
-          this.lf.remember.value
-        )
-        .then(
-          (res) => {
-            this.isLoading = false;
-            if (!res) {
-              this.modalService.showAlertModal(
-                'A megadott jelszó helytelen.',
-                null,
-                'error'
-              );
-              return;
-            }
-            this.authService.userStateChanged$.next(res);
-          },
-          (err) => {
-            this.isLoading = false;
-            this.modalService.showAlertModal(err.message, null, 'error');
+      if (!this.isRegistration) {
+        return this.login();
+      }
+      this.register();
+    }
+  }
+
+  login() {
+    this.authService
+      .login(
+        this.lf.email.value,
+        this.lf.password.value,
+        this.lf.remember.value
+      )
+      .then(
+        (res) => {
+          this.isLoading = false;
+          if (!res) {
+            this.modalService.showAlertModal(
+              'A megadott jelszó helytelen.',
+              null,
+              'error'
+            );
+            return;
           }
+          this.authService.userStateChanged$.next(res);
+        },
+        (err) => {
+          this.isLoading = false;
+          this.modalService.showAlertModal(err.message, null, 'error');
+        }
+      );
+  }
+
+  register() {
+    let userData = {
+      email: this.lf.email.value,
+      name: this.lf.password.value,
+      username: this.lf.username.value,
+    };
+    this.usersService.addUser(userData).subscribe(
+      (user) => {
+        this.isLoading = false;
+        this.isRegistration = true;
+        this.switchMode();
+        this.modalService.showAlertModal(
+          'Sikeres regisztráció!\nBejelentkezni az e-mail címeddel és teljes neveddel tudsz.',
+          null,
+          'success'
         );
+      },
+      (res) => {
+        this.isLoading = false;
+        if (res.status === 401) {
+          return this.modalService.showAlertModal(
+            res.error.message,
+            null,
+            'error'
+          );
+        }
+        this.modalService.showAlertModal(res, null, 'error');
+      }
+    );
+  }
+
+  switchMode() {
+    this.isRegistration = !this.isRegistration;
+    if (this.isRegistration) {
+      this.loginForm.controls['password'].setValue('');
+      this.loginForm.controls['username'].setValidators([
+        Validators.required,
+        Validators.minLength(5),
+      ]);
+      this.loginForm.controls['username'].updateValueAndValidity();
+    }
+
+    if (!this.isRegistration) {
+      this.loginForm.controls['username'].clearValidators();
+      this.loginForm.controls['username'].updateValueAndValidity();
     }
   }
 

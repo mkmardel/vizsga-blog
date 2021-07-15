@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
 import { Constants } from 'src/app/constants';
 import { map, tap } from 'rxjs/operators';
@@ -7,6 +7,12 @@ import { ModalService } from './modal.service';
 import { Subject } from 'rxjs';
 
 const API_URL: string = Constants.BASE_API_URL;
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +48,9 @@ export class UsersService {
         this.usersChanged$.next(users);
       })
     );
+  }
+
+  addUser(newUserObj: any) {
+    return this.http.post<User>(`${API_URL}/users`, newUserObj, httpOptions);
   }
 }
