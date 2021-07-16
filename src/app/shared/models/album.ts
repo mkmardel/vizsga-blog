@@ -28,4 +28,12 @@ export class Album {
     this._id = id;
     this._title = title;
   }
+
+  albumToObject(): any {
+    return {
+      userId: this.userId,
+      id: this.id,
+      title: this.title,
+    };
+  }
 }

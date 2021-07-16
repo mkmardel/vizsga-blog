@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { Photo } from '../../models/photo';
 import { GalleryService } from '../../services/gallery.service';
 import { ModalService } from '../../services/modal.service';
@@ -14,6 +15,8 @@ export class GalleryModalComponent implements OnInit {
   public images: Photo[];
   public currentIndex: number;
   public isLoading: boolean;
+  public isDeleting: boolean;
+  public confirmation: boolean;
 
   constructor(
     private modalService: ModalService,
@@ -22,6 +25,8 @@ export class GalleryModalComponent implements OnInit {
     this.isLoading = false;
     this.currentIndex = 0;
     this.images = [];
+    this.isDeleting = false;
+    this.confirmation = false;
   }
 
   ngOnInit(): void {
@@ -51,6 +56,7 @@ export class GalleryModalComponent implements OnInit {
   }
 
   left() {
+    this.confirmation = false;
     $('#mainImage').removeClass('fade-in');
     $('#mainImage').addClass('fade-out');
     setTimeout(() => {
@@ -63,6 +69,7 @@ export class GalleryModalComponent implements OnInit {
   }
 
   right() {
+    this.confirmation = false;
     $('#mainImage').removeClass('fade-in');
     $('#mainImage').addClass('fade-out');
     setTimeout(() => {
@@ -77,5 +84,30 @@ export class GalleryModalComponent implements OnInit {
   close() {
     this.albumId = null;
     $('#galleryModal').modal('hide');
+  }
+
+  deleteImage(index: number) {
+    this.confirmation = false;
+    this.showSpinner();
+    let photoId = this.images[index].id;
+    this.galleryService.deleteImage(photoId).subscribe(
+      (res) => {
+        this.images.splice(index, 1);
+        this.currentIndex = index == 0 ? 0 : index - 1;
+        this.isDeleting = false;
+      },
+      (err) => {
+        this.isDeleting = false;
+        this.modalService.showAlertModal(err.message, null, 'error');
+      }
+    );
+  }
+
+  showSpinner() {
+    this.isDeleting = true;
+    // response error offset
+    setTimeout(() => {
+      this.isDeleting = false;
+    }, 10000);
   }
 }

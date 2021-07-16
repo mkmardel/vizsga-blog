@@ -31,6 +31,7 @@ import { environment } from '../environments/environment';
 import { OwnPostsPipe } from './shared/pipes/own-posts.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AccountComponent } from './views/account/account.component';
+import { GalleryCreateModalComponent } from './shared/modals/gallery-create-modal/gallery-create-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AccountComponent } from './views/account/account.component';
     GalleryModalComponent,
     OwnPostsPipe,
     AccountComponent,
+    GalleryCreateModalComponent,
   ],
   imports: [
     BrowserModule,

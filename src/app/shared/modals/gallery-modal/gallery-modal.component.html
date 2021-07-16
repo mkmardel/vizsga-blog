@@ -22,8 +22,12 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-sm-12 w100 text-center">
-              <span class="btn-left" (click)="left()"
+            <div class="col-sm-12 w100 text-center my-5" *ngIf="!images.length">
+              <i class="bi bi-exclamation-diamond"></i>&nbsp;&nbsp;Az album
+              üres!
+            </div>
+            <div class="col-sm-12 w100 text-center" *ngIf="images.length">
+              <span *ngIf="currentIndex > 0" class="btn-left" (click)="left()"
                 ><i class="bi bi-caret-left-fill"></i
               ></span>
               <div>
@@ -36,19 +40,42 @@
                   alt="image"
                 />
               </div>
-              <span class="btn-right" (click)="right()"
+              <span
+                *ngIf="currentIndex < images.length - 1"
+                class="btn-right"
+                (click)="right()"
                 ><i class="bi bi-caret-right-fill"></i
               ></span>
             </div>
           </div>
         </div>
         <div class="footer">
-          <span class="counter"
+          <span class="counter" *ngIf="!confirmation && images.length"
             ><i class="bi bi-images"></i>&nbsp;&nbsp;{{ currentIndex + 1 }}/{{
               images.length
-            }}</span
+            }}
+          </span>
+          <button
+            *ngIf="!confirmation && images.length"
+            class="btn btn-danger btn-sm"
+            (click)="confirmation = true"
+            [disabled]="isDeleting"
           >
-          <button class="btn btn-secondary mt-2 btn-sm" (click)="close()">
+            <span *ngIf="!isDeleting"><i class="bi bi-trash"></i></span>
+            <span *ngIf="isDeleting"
+              ><img src="assets/img/loading_btn.gif" height="15px"
+            /></span>
+          </button>
+          <span *ngIf="confirmation" class="confirm alert-danger"
+            >Biztosan törölni szeretnéd?
+            <a (click)="deleteImage(currentIndex)">IGEN</a>&nbsp;
+            <a (click)="confirmation = false">NEM</a></span
+          >
+          <button
+            [class.hidden]="confirmation"
+            class="btn btn-secondary mt-2 btn-sm"
+            (click)="close()"
+          >
             <i class="bi bi-x-lg"></i>&nbsp;&nbsp;Bezárás
           </button>
         </div>

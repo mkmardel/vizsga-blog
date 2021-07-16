@@ -1,5 +1,26 @@
-<div class="card" (click)="open()">
-  <div class="card-hearer text-center">
+<div class="card">
+  <span>
+    <button
+      class="btn btn-success btn-sm btn-success"
+      [disabled]="isDeleting"
+      (click)="addImage()"
+    >
+      <span><i class="bi bi-image"></i>&nbsp;&nbsp;Új kép</span>
+    </button>
+    <button
+      class="btn btn-danger btn-sm btn-delete"
+      [disabled]="isDeleting"
+      (click)="deleteAlbum()"
+    >
+      <span *ngIf="!isDeleting"
+        ><i class="bi bi-trash"></i>&nbsp;&nbsp;Törlés</span
+      >
+      <span *ngIf="isDeleting"
+        ><img src="assets/img/loading_btn.gif" height="15px"
+      /></span>
+    </button>
+  </span>
+  <div class="card-head text-center" (click)="open()">
     <img
       class="img-fluid"
       src="assets/img/folder.png"

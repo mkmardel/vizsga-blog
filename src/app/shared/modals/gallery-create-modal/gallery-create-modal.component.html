@@ -1,0 +1,89 @@
+<div
+  class="modal fade"
+  id="galleryCreateModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">
+          <i class="bi {{ isAlbumCreate ? 'bi-folder-plus' : 'bi-image' }}"></i
+          >&nbsp;&nbsp;Új {{ isAlbumCreate ? "album" : "kép" }} hozzáadása
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="close()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <form [formGroup]="commonForm">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="bi bi-journal-richtext"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ isAlbumCreate ? 'Album' : 'Kép' }} címe"
+                aria-label="Cím"
+                formControlName="title"
+                aria-describedby="basic-addon1"
+                [ngClass]="{ 'is-invalid': submitted && cf.title.errors }"
+              />
+              <div
+                *ngIf="submitted && cf.title.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="cf.title.errors.required">
+                  Add meg a(z) {{ isAlbumCreate ? "album" : "kép" }} címét
+                </div>
+              </div>
+            </div>
+          </form>
+          <form *ngIf="!isAlbumCreate" [formGroup]="photoForm">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="bi bi-link-45deg"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="URL"
+                aria-label="URL"
+                formControlName="url"
+                aria-describedby="basic-addon1"
+                [ngClass]="{ 'is-invalid': submitted && pf.url.errors }"
+              />
+              <div *ngIf="submitted && pf.url.errors" class="invalid-feedback">
+                <div *ngIf="pf.url.errors.required">
+                  Add meg a kép elérhetőségét
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="isLoading" class="my-0 text-center">
+          <img src="assets/img/loading.gif" alt="loading" />
+        </div>
+        <button
+          *ngIf="!isLoading"
+          type="button"
+          (click)="onSubmit()"
+          class="btn btn-info btn-block btn-round w-100 mt-3"
+        >
+          <strong>Hozzáadás</strong>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

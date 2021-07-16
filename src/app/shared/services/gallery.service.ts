@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -9,6 +9,11 @@ import { AuthService } from './auth.service';
 import { ModalService } from './modal.service';
 
 const API_URL = Constants.BASE_API_URL;
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +54,58 @@ export class GalleryService {
     params = params.append('albumId', id?.toString());
 
     return this.http.get<Photo[]>(`${API_URL}/photos`, { params: params });
+  }
+
+  deleteAlbum(id: number) {
+    this.http.delete(`${API_URL}/albums/${id}`, httpOptions).subscribe(
+      (res) => {
+        let index = this._albums.findIndex((album) => album.id == id);
+        this._albums.splice(index, 1);
+        this.albumsFetched$.next(this.albums);
+      },
+      (err) => {
+        this.modalService.showAlertModal(err.message, null, 'error');
+      }
+    );
+  }
+
+  deleteImage(id: number) {
+    return this.http.delete(`${API_URL}/photos/${id}`, httpOptions);
+  }
+
+  addAlbum(newAlbum: Album) {
+    this.http
+      .post<Album>(`${API_URL}/albums`, newAlbum.albumToObject(), httpOptions)
+      .subscribe(
+        (album) => {
+          this._albums.push(album);
+          this.albumsFetched$.next(this.albums);
+        },
+        (err) => {
+          this.modalService.showAlertModal(err.message, null, 'error');
+        }
+      );
+  }
+
+  addImage(newPhoto: Photo) {
+    this.http
+      .post<Photo>(`${API_URL}/photos`, newPhoto.photoToObject(), httpOptions)
+      .subscribe(
+        (photo) => {
+          this.albumsFetched$.next(this.albums);
+          this.modalService.showAlertModal(
+            'Az új kép sikeresen hozzá lett adva az albumhoz.',
+            null,
+            'success'
+          );
+        },
+        (err) => {
+          this.modalService.showAlertModal(err.message, null, 'error');
+        }
+      );
+  }
+
+  clearGallery() {
+    this._albums = [];
   }
 }

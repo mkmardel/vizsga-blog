@@ -113,4 +113,8 @@ export class CommentService {
         }
       );
   }
+
+  clearComments() {
+    this._comments = [];
+  }
 }

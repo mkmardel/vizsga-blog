@@ -2,4 +2,25 @@
   <div class="col-sm-3 my-2" *ngFor="let album of albums">
     <app-gallery-item [album]="album"></app-gallery-item>
   </div>
+  <div class="col-sm-3 my-2">
+    <div
+      class="card"
+      style="min-height: 100%; cursor: pointer"
+      (click)="createAlbum()"
+    >
+      <div class="card-hearer text-center">
+        <img
+          class="img-fluid"
+          src="assets/img/folder_add.png"
+          width="150px"
+          alt="folder_add"
+        />
+      </div>
+      <div class="card-body">
+        <div class="short-text">
+          <strong>Új album hozzáadása</strong>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

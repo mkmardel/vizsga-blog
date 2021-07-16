@@ -33,7 +33,6 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loggedInUser = this.authService.getStoredUser();
-    console.log(this.loggedInUser);
   }
 
   fileChangeEvent(event: any): void {
@@ -56,15 +55,17 @@ export class AccountComponent implements OnInit, OnDestroy {
   closeAccount() {
     this.modalService.ConfirmState.pipe(take(1)).forEach((state) => {
       this.isDeleting = true;
-      this.usersService.removeUserAndData(this.loggedInUser.id).subscribe(
-        (res) => {
-          this.authService.logout();
-        },
-        (err) => {
-          this.isDeleting = false;
-          this.modalService.showAlertModal(err.message, null, 'error');
-        }
-      );
+      if (state.action == 'close_account') {
+        this.usersService.removeUserAndData(this.loggedInUser.id).subscribe(
+          (res) => {
+            this.authService.logout();
+          },
+          (err) => {
+            this.isDeleting = false;
+            this.modalService.showAlertModal(err.message, null, 'error');
+          }
+        );
+      }
     });
     this.modalService.showAlertModal(
       'Biztosan törölni szeretnéd a fiókodat? A kért művelet nem vonható vissza!',

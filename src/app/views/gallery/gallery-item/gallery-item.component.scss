@@ -1,5 +1,9 @@
-.card {
+.card-head {
   cursor: pointer;
+}
+
+.img-fluid {
+  margin-left: -90px !important;
 }
 
 .short-text {
@@ -8,4 +12,17 @@
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.btn-delete {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 79px;
+}
+
+.btn-success {
+  position: absolute;
+  right: 10px;
+  top: 45px;
 }

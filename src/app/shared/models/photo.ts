@@ -52,4 +52,14 @@ export class Photo {
     this._url = url;
     this._thumbnailUrl = thumbnailUrl;
   }
+
+  photoToObject(): any {
+    return {
+      albumId: this.albumId,
+      id: this.id,
+      title: this.title,
+      url: this.url,
+      thumbnailUrl: this.thumbnailUrl,
+    };
+  }
 }

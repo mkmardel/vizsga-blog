@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
+import { CommentService } from '../services/comment.service';
+import { GalleryService } from '../services/gallery.service';
 import { ModalService } from '../services/modal.service';
 declare var $: any;
 
@@ -32,7 +34,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private galleryService: GalleryService,
+    private commentService: CommentService
   ) {
     this.title = 'Blogtoday';
     this.loggedIn = false;
@@ -50,6 +54,8 @@ export class HeaderComponent implements OnInit {
         $('.navbar-collapse').collapse('hide');
       }
       if (!user) {
+        this.galleryService.clearGallery();
+        this.commentService.clearComments();
         this.router.navigate(['/']);
       }
     });
