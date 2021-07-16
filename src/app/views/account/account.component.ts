@@ -96,7 +96,7 @@ export class AccountComponent implements OnInit, OnDestroy {
             'success'
           );
           setTimeout(() => {
-            window.location.reload();
+            //window.location.reload();
             this.isLoading = false;
           }, 5000);
         },
