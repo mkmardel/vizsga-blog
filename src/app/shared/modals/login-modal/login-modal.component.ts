@@ -74,7 +74,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           if (!res) {
             this.modalService.showAlertModal(
-              'A megadott jelszó helytelen.',
+              'A megadott e-mail cím vagy jelszó hibás.',
               null,
               'error'
             );
@@ -121,6 +121,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   }
 
   switchMode() {
+    this.submitted = false;
     this.isRegistration = !this.isRegistration;
     if (this.isRegistration) {
       this.loginForm.controls['password'].setValue('');
