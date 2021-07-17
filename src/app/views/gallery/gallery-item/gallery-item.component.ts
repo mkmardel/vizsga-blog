@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Album } from 'src/app/shared/models/album';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GalleryService } from 'src/app/shared/services/gallery.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
+declare var $: any;
 
 @Component({
   selector: 'app-gallery-item',
@@ -12,6 +13,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 })
 export class GalleryItemComponent implements OnInit {
   @Input() album: Album;
+  @ViewChild('group') btnGroup: ElementRef;
   public userName: string;
   public isDeleting: boolean;
 
@@ -50,6 +52,10 @@ export class GalleryItemComponent implements OnInit {
       role: 'image',
       id: this.album.id,
     });
+  }
+
+  toggleMenu() {
+    this.btnGroup.nativeElement.classList.toggle('visible');
   }
 
   showSpinner() {

@@ -1,15 +1,34 @@
 <div class="card">
-  <span>
+  <div class="dots" (click)="toggleMenu()"></div>
+  <div class="card-head text-center" (click)="open()">
+    <img
+      class="img-fluid"
+      src="assets/img/folder.png"
+      width="150px"
+      alt="folder"
+    />
+  </div>
+  <div class="card-body">
+    <div class="short-text" (click)="open()">
+      <strong>{{ album.title }}</strong>
+    </div>
+    <span class="d-block mt-1"
+      ><i class="bi bi-person-bounding-box"></i>&nbsp;&nbsp;{{ userName }}</span
+    >
+  </div>
+  <span #group class="btn-group" role="group" aria-label="menu">
     <button
-      class="btn btn-success btn-sm btn-success"
+      type="button"
       [disabled]="isDeleting"
+      class="btn btn-light btn-sm b-n"
       (click)="addImage()"
     >
-      <span><i class="bi bi-image"></i>&nbsp;&nbsp;Új kép</span>
+      <i class="bi bi-image"></i>&nbsp;&nbsp;Új kép
     </button>
     <button
-      class="btn btn-danger btn-sm btn-delete"
+      type="button"
       [disabled]="isDeleting"
+      class="btn btn-light btn-sm b-d"
       (click)="deleteAlbum()"
     >
       <span *ngIf="!isDeleting"
@@ -20,20 +39,4 @@
       /></span>
     </button>
   </span>
-  <div class="card-head text-center" (click)="open()">
-    <img
-      class="img-fluid"
-      src="assets/img/folder.png"
-      width="150px"
-      alt="folder"
-    />
-  </div>
-  <div class="card-body">
-    <div class="short-text">
-      <strong>{{ album.title }}</strong>
-    </div>
-    <span class="d-block mt-1"
-      ><i class="bi bi-person-bounding-box"></i>&nbsp;&nbsp;{{ userName }}</span
-    >
-  </div>
 </div>

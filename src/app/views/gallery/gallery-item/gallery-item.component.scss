@@ -2,28 +2,63 @@
   cursor: pointer;
 }
 
-.img-fluid {
-  margin-left: -90px !important;
-}
-
 .short-text {
   white-space: nowrap;
   // width: 265px;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-.btn-delete {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 80px;
+.img-fluid {
+  margin-left: -20px;
 }
 
-.btn-success {
+.dots {
   position: absolute;
-  right: 10px;
-  top: 45px;
-  width: 80px;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dots:after {
+  content: "\2807";
+  font-size: 25px;
+}
+
+.dots:hover {
+  color: gray;
+  transform: rotate(90deg);
+}
+
+.btn-group {
+  padding: 0px;
+  margin: 0px;
+  width: 100% !important;
+  height: 0px !important;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn {
+  border-radius: 0 0 4px 4px;
+}
+
+.b-n {
+  color: green;
+}
+
+.b-d {
+  color: red;
+}
+
+.btn:hover {
+  color: white;
+  background-color: darkgray;
+}
+
+.visible {
+  height: 31px !important;
 }
