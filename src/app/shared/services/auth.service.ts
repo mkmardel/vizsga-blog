@@ -25,8 +25,14 @@ export class AuthService {
     let userLoggedIn = localStorage.getItem('remember');
     if (userLoggedIn != null) {
       this._userState = JSON.parse(localStorage.getItem('currentUser'));
+      this.usersService.reloadUserImage(this._userState.id);
     }
     return this.userState;
+  }
+
+  getUserImage() {
+    this._userState = JSON.parse(localStorage.getItem('currentUser'));
+    return this.userState.imageUrl;
   }
 
   login(

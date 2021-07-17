@@ -1,10 +1,12 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { CommentService } from '../services/comment.service';
 import { GalleryService } from '../services/gallery.service';
 import { ModalService } from '../services/modal.service';
+import { UsersService } from '../services/users.service';
 declare var $: any;
 
 @Component({
@@ -12,7 +14,7 @@ declare var $: any;
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', ['$event']) // for window scroll events
   onScroll(event: any) {
     let offset = window.pageYOffset;
@@ -25,6 +27,8 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  private userStateSubscription: Subscription;
+  private usersSubscription: Subscription;
   private currentUser: User;
   public title: string;
   public loggedIn: boolean;
@@ -37,7 +41,8 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private galleryService: GalleryService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private usersService: UsersService
   ) {
     this.title = 'Blogtoday';
     this.loggedIn = false;
@@ -49,17 +54,23 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.setRoles(this.authService.getStoredUser());
 
-    this.authService.userStateChanged$.subscribe((user) => {
-      this.setRoles(user);
-      if (this.loggedIn) {
-        this.modalService.loginModalSubject$.next({ open: false });
-        $('.navbar-collapse').collapse('hide');
+    this.userStateSubscription = this.authService.userStateChanged$.subscribe(
+      (user) => {
+        this.setRoles(user);
+        if (this.loggedIn) {
+          this.modalService.loginModalSubject$.next({ open: false });
+          $('.navbar-collapse').collapse('hide');
+        }
+        if (!user) {
+          this.galleryService.clearGallery();
+          this.commentService.clearComments();
+          this.router.navigate(['/']);
+        }
       }
-      if (!user) {
-        this.galleryService.clearGallery();
-        this.commentService.clearComments();
-        this.router.navigate(['/']);
-      }
+    );
+
+    this.usersSubscription = this.usersService.usersChanged$.subscribe(() => {
+      this.imageUrl = this.authService.getUserImage();
     });
   }
 
@@ -80,5 +91,10 @@ export class HeaderComponent implements OnInit {
 
   moveToTop() {
     window.scrollTo(0, 0);
+  }
+
+  ngOnDestroy(): void {
+    this.userStateSubscription?.unsubscribe();
+    this.usersSubscription?.unsubscribe();
   }
 }

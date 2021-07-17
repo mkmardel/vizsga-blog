@@ -66,7 +66,7 @@
             class="row"
             style="margin-top: 15px"
           >
-            <div class="text-center col-md-8">
+            <div class="text-center col-sm-8">
               <h5>Kivágás</h5>
               <image-cropper
                 [imageChangedEvent]="imageChangedEvent"
@@ -79,15 +79,15 @@
                 (loadImageFailed)="loadImageFailed()"
               ></image-cropper>
             </div>
-            <div class="text-center col-md-4">
+            <div class="text-center col-sm-4" style="margin-top: 5px">
               <h5>Előnézet</h5>
-              <img [src]="croppedImage" />
+              <img class="img-fluid" [src]="croppedImage" />
               <br />
               <button
                 (click)="saveImage()"
                 [disabled]="isLoading"
-                class="btn btn-primary mt-4"
-                style="width: 256px"
+                class="btn btn-primary mt-3"
+                style="max-width: 256px; width: 100%"
               >
                 <i class="bi bi-file-earmark-check"></i>&nbsp;&nbsp;Mentés
               </button>

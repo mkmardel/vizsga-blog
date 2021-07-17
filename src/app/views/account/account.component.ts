@@ -90,6 +90,7 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.showCropper = false;
           this.loggedInUser.imageUrl = url;
           this.usersService.setUserImage(this.loggedInUser.id, url);
+          this.authService.userStateChanged$.next(this.loggedInUser);
           this.modalService.showAlertModal(
             'Sikeres feltöltés! A új kép cseréje eltarthat néhány másodpercig.',
             null,

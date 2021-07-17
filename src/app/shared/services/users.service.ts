@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
 import { Constants } from 'src/app/constants';
 import { map, tap } from 'rxjs/operators';
-import { ModalService } from './modal.service';
 import { Subject } from 'rxjs';
 
 const API_URL: string = Constants.BASE_API_URL;
@@ -20,7 +19,7 @@ const httpOptions = {
 export class UsersService {
   private _users: User[];
   public usersChanged$: Subject<User[]>;
-  constructor(private http: HttpClient, private modalService: ModalService) {
+  constructor(private http: HttpClient) {
     this._users = [];
     this.usersChanged$ = new Subject<User[]>();
   }
@@ -70,6 +69,18 @@ export class UsersService {
       'currentUser',
       JSON.stringify(this._users[index].userToObject())
     );
+  }
+
+  async reloadUserImage(id: number) {
+    if (this._users?.length == 0) {
+      await this.fetchUsers().toPromise();
+    }
+    let index = this._users.findIndex((user) => user.id == id);
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify(this._users[index].userToObject())
+    );
+    this.usersChanged$.next(this.users);
   }
 
   removeUserAndData(id: number) {
