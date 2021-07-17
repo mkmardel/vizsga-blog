@@ -104,10 +104,17 @@
               style="margin-right: 20px"
               data-bs-toggle="dropdown"
             >
-              <i class="far fa-user-circle"></i>&nbsp;&nbsp;{{ username }}
+              <!-- <i class="far fa-user-circle"></i> -->
+              <img
+                [src]="imageUrl ? imageUrl : 'assets/img/user.png'"
+                alt="userimage"
+                width="30px"
+                style="border-radius: 50%"
+              />
+              &nbsp;&nbsp;{{ username }}
             </a>
             <ul
-              class="dropdown-menu animate slideIn"
+              class="dropdown-menu animate slideIn mt-1"
               aria-labelledby="navbarDropdown"
             >
               <li routerLink="/account">

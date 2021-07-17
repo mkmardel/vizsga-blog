@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   public loggedIn: boolean;
   public isAdmin: boolean;
   public username: string;
+  public imageUrl: string;
 
   constructor(
     private modalService: ModalService,
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit {
     this.loggedIn = false;
     this.isAdmin = false;
     this.username = '';
+    this.imageUrl = '';
   }
 
   ngOnInit(): void {
@@ -65,6 +67,7 @@ export class HeaderComponent implements OnInit {
     this.currentUser = user;
     this.loggedIn = this.currentUser != null;
     this.username = this.currentUser?.username;
+    this.imageUrl = this.currentUser?.imageUrl;
     this.isAdmin = this.currentUser?.role == 'admin';
   }
 
