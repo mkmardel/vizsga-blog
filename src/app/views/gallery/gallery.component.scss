@@ -1,0 +1,19 @@
+@media (max-width: 991px) {
+  .img-fluid {
+    width: 70% !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .img-fluid {
+    width: 40% !important;
+  }
+}
+.short-text {
+  white-space: nowrap;
+  // width: 265px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

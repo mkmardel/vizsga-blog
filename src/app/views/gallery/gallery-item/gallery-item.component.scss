@@ -13,6 +13,7 @@
 
 .img-fluid {
   margin-left: -20px;
+  padding-top: 5px;
 }
 
 .dots {
@@ -61,4 +62,16 @@
 
 .visible {
   height: 31px !important;
+}
+
+@media (max-width: 991px) {
+  .img-fluid {
+    width: 70% !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .img-fluid {
+    width: 40% !important;
+  }
 }
