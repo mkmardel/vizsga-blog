@@ -12,6 +12,21 @@ input {
   min-width: 50px;
 }
 
+.btn-light:hover {
+  color: white;
+  background-color: darkgray;
+}
+
+.b-l {
+  color: blue;
+}
+.b-e {
+  color: green;
+}
+.b-d {
+  color: red;
+}
+
 .btn-group {
   float: right;
 }

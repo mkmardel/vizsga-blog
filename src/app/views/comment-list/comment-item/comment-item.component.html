@@ -4,16 +4,16 @@
   <div *ngIf="isAdmin" class="btn-group mb-2">
     <button
       *ngIf="!isPosts()"
-      class="btn btn-primary btn-sm"
+      class="btn btn-light btn-sm b-l"
       routerLink="/posts/{{ comment.postId }}"
     >
       <i class="bi bi-geo"></i>
     </button>
-    <button class="btn btn-success btn-sm" (click)="editComment()">
+    <button class="btn btn-light btn-sm b-e" (click)="editComment()">
       <i class="bi bi-pencil-square"></i>
     </button>
     <button
-      class="btn btn-danger btn-sm"
+      class="btn btn-light btn-sm b-d"
       [disabled]="isDeleting"
       (click)="deleteComment()"
     >
