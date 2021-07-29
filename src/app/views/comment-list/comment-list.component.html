@@ -8,6 +8,7 @@
       <p *ngIf="userId > -1">
         <i class="bi bi-chat-dots"></i>&nbsp;&nbsp;Felhasználó kommentjei:
       </p>
+      <hr *ngIf="userId > -1" />
       <app-comment-item
         *ngFor="let comment of comments"
         [comment]="comment"

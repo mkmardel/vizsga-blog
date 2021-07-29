@@ -39,9 +39,10 @@
   <a (click)="loadComments()" class="m-r-15 text-inverse-lighter"
     ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Kommentek</a
   >
+  <hr *ngIf="showComments" style="opacity: 0.13; margin-bottom: 0px" />
 </div>
 
-<div class="comments" *ngIf="showComments">
+<div [@showComments] [@hideComments] class="comments" *ngIf="showComments">
   <div class="col-12 mt-3">
     <app-comment-list [postId]="post.id"></app-comment-list>
   </div>

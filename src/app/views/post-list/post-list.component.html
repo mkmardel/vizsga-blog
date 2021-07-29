@@ -2,12 +2,16 @@
   <div class="col-md-12 post-content">
     <app-post-create (applyFilter)="applyFilter($event)"></app-post-create>
     <div *ngIf="posts | ownPosts: filterPosts as result">
-      <ul class="timeline" *ngFor="let post of result; let i = index">
+      <ul
+        [@listCloseUp]
+        class="timeline"
+        *ngFor="let post of result; let i = index"
+      >
         <li>
           <div class="timeline-icon">
             <a>&nbsp;</a>
           </div>
-          <div class="timeline-body" id="post{{ post.id }}">
+          <div [@listMoveIn] class="timeline-body" id="post{{ post.id }}">
             <app-post-item [post]="post"></app-post-item>
           </div>
         </li>

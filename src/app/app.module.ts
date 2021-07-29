@@ -32,6 +32,7 @@ import { OwnPostsPipe } from './shared/pipes/own-posts.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AccountComponent } from './views/account/account.component';
 import { GalleryCreateModalComponent } from './shared/modals/gallery-create-modal/gallery-create-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { GalleryCreateModalComponent } from './shared/modals/gallery-create-moda
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

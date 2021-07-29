@@ -1,82 +1,87 @@
-<hr />
-<img src="assets/img/comment.png" alt="comment" style="margin: 0 10px 0 0px" />
-<span style="font-size: 13px">
-  <div *ngIf="isAdmin" class="btn-group mb-2">
-    <button
-      *ngIf="!isPosts()"
-      class="btn btn-light btn-sm b-l"
-      routerLink="/posts/{{ comment.postId }}"
-    >
-      <i class="bi bi-geo"></i>
-    </button>
-    <button class="btn btn-light btn-sm b-e" (click)="editComment()">
-      <i class="bi bi-pencil-square"></i>
-    </button>
-    <button
-      class="btn btn-light btn-sm b-d"
-      [disabled]="isDeleting"
-      (click)="deleteComment()"
-    >
-      <span *ngIf="!isDeleting"><i class="bi bi-trash"></i></span>
-      <span *ngIf="isDeleting"
-        ><img src="assets/img/loading_btn.gif" height="15px"
-      /></span>
-    </button>
-  </div>
-  <strong>{{ comment.email }}</strong>
-  <br />
-  <div *ngIf="!formVisible" class="mx-2 mt-2">{{ comment.body }}</div>
-  <div *ngIf="formVisible">
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"
-              ><i class="bi bi-chat-dots"></i
-            ></span>
-          </div>
-          <textarea
-            type="text"
-            class="form-control"
-            placeholder="Komment"
-            aria-label="Komment"
-            formControlName="commentBody"
-            aria-describedby="basic-addon1"
-            [ngClass]="{ 'is-invalid': submitted && cf.commentBody.errors }"
-          ></textarea>
-          <div
-            *ngIf="submitted && cf.commentBody.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="cf.commentBody.errors.required">
-              Add meg a komment tartalmát
+<div class="comment mt-3">
+  <img
+    src="assets/img/comment.png"
+    alt="comment"
+    style="margin: 0 10px 0 0px"
+  />
+  <span style="font-size: 13px">
+    <div *ngIf="isAdmin" class="btn-group mb-2">
+      <button
+        *ngIf="!isPosts()"
+        class="btn btn-light btn-sm b-l"
+        routerLink="/posts/{{ comment.postId }}"
+      >
+        <i class="bi bi-geo"></i>
+      </button>
+      <button class="btn btn-light btn-sm b-e" (click)="editComment()">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+      <button
+        class="btn btn-light btn-sm b-d"
+        [disabled]="isDeleting"
+        (click)="deleteComment()"
+      >
+        <span *ngIf="!isDeleting"><i class="bi bi-trash"></i></span>
+        <span *ngIf="isDeleting"
+          ><img src="assets/img/loading_btn.gif" height="15px"
+        /></span>
+      </button>
+    </div>
+    <strong>{{ comment.email }}</strong>
+    <br />
+    <div *ngIf="!formVisible" class="mx-2 mt-2">{{ comment.body }}</div>
+    <div *ngIf="formVisible">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="bi bi-chat-dots"></i
+              ></span>
+            </div>
+            <textarea
+              type="text"
+              class="form-control"
+              placeholder="Komment"
+              aria-label="Komment"
+              formControlName="commentBody"
+              aria-describedby="basic-addon1"
+              [ngClass]="{ 'is-invalid': submitted && cf.commentBody.errors }"
+            ></textarea>
+            <div
+              *ngIf="submitted && cf.commentBody.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="cf.commentBody.errors.required">
+                Add meg a komment tartalmát
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <button
-            type="submit"
-            [disabled]="isSubmitting"
-            class="btn btn-success"
-          >
-            <span *ngIf="!isSubmitting">
-              <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></span
+        <div class="row">
+          <div class="col-sm-12">
+            <button
+              type="submit"
+              [disabled]="isSubmitting"
+              class="btn btn-success"
             >
-            <span *ngIf="isSubmitting"
-              ><img src="assets/img/loading_btn.gif" height="21px"
-            /></span></button
-          >&nbsp;&nbsp;
-          <button
-            type="button"
-            (click)="this.formVisible = false"
-            class="btn btn-danger"
-          >
-            <i class="bi bi-x">&nbsp;&nbsp;Mégsem</i>
-          </button>
+              <span *ngIf="!isSubmitting">
+                <i class="bi bi-person-check">&nbsp;&nbsp;Mehet!</i></span
+              >
+              <span *ngIf="isSubmitting"
+                ><img src="assets/img/loading_btn.gif" height="21px"
+              /></span></button
+            >&nbsp;&nbsp;
+            <button
+              type="button"
+              (click)="this.formVisible = false"
+              class="btn btn-danger"
+            >
+              <i class="bi bi-x">&nbsp;&nbsp;Mégsem</i>
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-</span>
+      </form>
+    </div>
+  </span>
+</div>

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { listType1 } from 'src/app/shared/animations/ListAnimations';
 import { Post } from 'src/app/shared/models/post';
 import { PostService } from 'src/app/shared/services/post.service';
 declare var $: any;
@@ -9,6 +10,7 @@ declare var $: any;
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss'],
+  animations: listType1,
 })
 export class PostListComponent implements OnInit, AfterViewInit, OnDestroy {
   private postsSubscription: Subscription;

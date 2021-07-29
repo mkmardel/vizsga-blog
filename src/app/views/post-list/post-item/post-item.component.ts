@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { listType2 } from 'src/app/shared/animations/ListAnimations';
 import { Comment } from 'src/app/shared/models/comment';
 import { Post } from 'src/app/shared/models/post';
 import { User } from 'src/app/shared/models/user';
@@ -21,6 +22,7 @@ import { UsersService } from 'src/app/shared/services/users.service';
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.scss'],
+  animations: listType2,
 })
 export class PostItemComponent implements OnInit, OnDestroy {
   @Input() post: Post;
