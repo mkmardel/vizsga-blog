@@ -32,7 +32,7 @@ export class AuthService {
 
   getUserImage() {
     this._userState = JSON.parse(localStorage.getItem('currentUser'));
-    return this.userState.imageUrl;
+    return this.userState?.imageUrl;
   }
 
   login(

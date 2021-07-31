@@ -6,60 +6,58 @@ import { CommentsResolver } from './shared/resolvers/comments.resolver';
 import { GalleryResolver } from './shared/resolvers/gallery.resolver';
 import { PostsResolver } from './shared/resolvers/posts.resolver';
 import { UsersResolver } from './shared/resolvers/users.resolver';
-import { AccountComponent } from './views/account/account.component';
-import { CommentListComponent } from './views/comment-list/comment-list.component';
-import { CommentSummaryComponent } from './views/comment-summary/comment-summary.component';
-import { GalleryComponent } from './views/gallery/gallery.component';
-import { HomeComponent } from './views/home/home.component';
-import { NotFoundComponent } from './views/not-found/not-found.component';
-import { PostListComponent } from './views/post-list/post-list.component';
-import { UserSelectComponent } from './views/users/user-select/user-select.component';
-import { UsersComponent } from './views/users/users.component';
 
 const routes: Routes = [
   {
     path: 'posts',
-    component: PostListComponent,
-    resolve: [UsersResolver, CommentsResolver, PostsResolver],
-  },
-  {
-    path: 'posts/:id',
-    component: PostListComponent,
+    loadChildren: () =>
+      import('./views/post-list/post-list.module').then(
+        (m) => m.PostListModule
+      ),
     resolve: [UsersResolver, CommentsResolver, PostsResolver],
   },
   {
     path: 'comments',
-    component: CommentSummaryComponent,
+    loadChildren: () =>
+      import('./views/comment-summary/comment-summary.module').then(
+        (m) => m.CommentSummaryModule
+      ),
     resolve: [UsersResolver, PostsResolver, CommentsResolver],
     canActivate: [AuthGuard],
   },
   {
     path: 'users',
-    component: UsersComponent,
+    loadChildren: () =>
+      import('./views/users/users.module').then((m) => m.UsersModule),
     resolve: [CommentsResolver, UsersResolver],
     canActivate: [AuthGuard, UserRoleGuard],
-    children: [
-      { path: '', component: UserSelectComponent },
-      {
-        path: ':uid',
-        component: CommentListComponent,
-        resolve: [CommentsResolver, UsersResolver],
-      },
-    ],
   },
   {
     path: 'gallery',
-    component: GalleryComponent,
+    loadChildren: () =>
+      import('./views/gallery/gallery.module').then((m) => m.GalleryModule),
     resolve: [GalleryResolver],
     canActivate: [AuthGuard],
   },
   {
     path: 'account',
-    component: AccountComponent,
+    loadChildren: () =>
+      import('./views/account/account.module').then((m) => m.AccountModule),
     canActivate: [AuthGuard],
   },
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./views/home/home.module').then((m) => m.HomeModule),
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./views/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
+  },
 ];
 
 @NgModule({

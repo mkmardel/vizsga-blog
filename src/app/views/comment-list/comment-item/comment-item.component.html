@@ -9,7 +9,7 @@
       <button
         *ngIf="!isPosts()"
         class="btn btn-light btn-sm b-l"
-        routerLink="/posts/{{ comment.postId }}"
+        (click)="visitPost(comment.postId)"
       >
         <i class="bi bi-geo"></i>
       </button>

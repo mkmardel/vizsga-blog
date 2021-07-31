@@ -59,6 +59,10 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     return this.commentForm.controls;
   }
 
+  visitPost(postId: any) {
+    this.router.navigate(['/posts/' + postId]);
+  }
+
   isPosts() {
     return this.router.url.indexOf('/posts') > -1;
   }
