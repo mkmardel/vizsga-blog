@@ -30,7 +30,7 @@ export const listType1 = [
       'in',
       style({
         opacity: 1,
-        maxHeight: '900px',
+        maxHeight: '1000px',
       })
     ),
     transition('* => void', [
@@ -49,7 +49,7 @@ export const listType2 = [
   trigger('hideComments', [
     transition('* => void', [
       style({
-        maxHeight: '600px',
+        maxHeight: '500px',
         overflowY: 'hidden',
       }),
       animate(
@@ -69,7 +69,7 @@ export const listType2 = [
       animate(
         500,
         style({
-          maxHeight: '600px',
+          maxHeight: '500px',
         })
       ),
     ]),

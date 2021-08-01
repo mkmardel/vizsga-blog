@@ -37,9 +37,11 @@
 </div>
 <div class="timeline-footer">
   <a (click)="loadComments()" class="m-r-15 text-inverse-lighter"
-    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Kommentek</a
-  >
-  <hr *ngIf="showComments" style="opacity: 0.13; margin-bottom: 0px" />
+    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Kommentek&nbsp;&nbsp;<i
+      class="fas fa-chevron-{{ showComments ? 'down' : 'up' }}"
+    ></i
+  ></a>
+  <!-- <hr *ngIf="showComments" style="opacity: 0.13; margin-bottom: 0px" /> -->
 </div>
 
 <div [@showComments] [@hideComments] class="comments" *ngIf="showComments">
