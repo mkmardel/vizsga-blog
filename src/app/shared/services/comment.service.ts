@@ -9,12 +9,6 @@ import { HttpHeaders } from '@angular/common/http';
 
 const API_URL = Constants.BASE_API_URL;
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -43,11 +37,7 @@ export class CommentService {
 
   addComment(newComment: Comment) {
     this.http
-      .post<Comment>(
-        `${API_URL}/comments`,
-        newComment.commentToObject(),
-        httpOptions
-      )
+      .post<Comment>(`${API_URL}/comments`, newComment.commentToObject())
       .subscribe(
         (commentData) => {
           this.comments.push(commentData);
@@ -65,11 +55,7 @@ export class CommentService {
 
   updateComment(updatedComment: Comment) {
     this.http
-      .put<Comment>(
-        `${API_URL}/comments/${updatedComment.id}`,
-        updatedComment,
-        httpOptions
-      )
+      .put<Comment>(`${API_URL}/comments/${updatedComment.id}`, updatedComment)
       .subscribe(
         (commentData) => {
           let index = this.comments.findIndex(
@@ -94,24 +80,20 @@ export class CommentService {
   }
 
   deleteComment(id: number) {
-    this.http
-      .delete<{ id: number }>(`${API_URL}/comments/${id}`, httpOptions)
-      .subscribe(
-        (res) => {
-          let index = this.comments.findIndex(
-            (comment) => comment.id == res.id
-          );
-          this.comments.splice(index, 1);
-          this.commentsChanged$.next(this.comments);
-        },
-        (err) => {
-          this.modalService.showAlertModal(
-            `Hiba történt! (${err.message})`,
-            null,
-            'error'
-          );
-        }
-      );
+    this.http.delete<{ id: number }>(`${API_URL}/comments/${id}`).subscribe(
+      (res) => {
+        let index = this.comments.findIndex((comment) => comment.id == res.id);
+        this.comments.splice(index, 1);
+        this.commentsChanged$.next(this.comments);
+      },
+      (err) => {
+        this.modalService.showAlertModal(
+          `Hiba történt! (${err.message})`,
+          null,
+          'error'
+        );
+      }
+    );
   }
 
   clearComments() {

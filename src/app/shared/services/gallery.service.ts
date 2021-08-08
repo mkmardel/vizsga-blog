@@ -9,11 +9,6 @@ import { AuthService } from './auth.service';
 import { ModalService } from './modal.service';
 
 const API_URL = Constants.BASE_API_URL;
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-};
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +52,7 @@ export class GalleryService {
   }
 
   deleteAlbum(id: number) {
-    this.http.delete(`${API_URL}/albums/${id}`, httpOptions).subscribe(
+    this.http.delete(`${API_URL}/albums/${id}`).subscribe(
       (res) => {
         let index = this._albums.findIndex((album) => album.id == id);
         this._albums.splice(index, 1);
@@ -70,12 +65,12 @@ export class GalleryService {
   }
 
   deleteImage(id: number) {
-    return this.http.delete(`${API_URL}/photos/${id}`, httpOptions);
+    return this.http.delete(`${API_URL}/photos/${id}`);
   }
 
   addAlbum(newAlbum: Album) {
     this.http
-      .post<Album>(`${API_URL}/albums`, newAlbum.albumToObject(), httpOptions)
+      .post<Album>(`${API_URL}/albums`, newAlbum.albumToObject())
       .subscribe(
         (album) => {
           this._albums.push(album);
@@ -89,7 +84,7 @@ export class GalleryService {
 
   addImage(newPhoto: Photo) {
     this.http
-      .post<Photo>(`${API_URL}/photos`, newPhoto.photoToObject(), httpOptions)
+      .post<Photo>(`${API_URL}/photos`, newPhoto.photoToObject()) //, httpOptions);
       .subscribe(
         (photo) => {
           this.albumsFetched$.next(this.albums);

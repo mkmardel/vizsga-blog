@@ -8,11 +8,12 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { LoginModalComponent } from './shared/modals/login-modal/login-modal.component';
 import { AlertModalComponent } from './shared/modals/alert-modal/alert-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingModalComponent } from './shared/modals/loading-modal/loading-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpConfigInterceptor } from './shared/interceptors/http-config.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

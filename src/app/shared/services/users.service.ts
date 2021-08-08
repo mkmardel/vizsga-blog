@@ -7,12 +7,6 @@ import { Subject } from 'rxjs';
 
 const API_URL: string = Constants.BASE_API_URL;
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -51,7 +45,7 @@ export class UsersService {
   }
 
   addUser(newUserObj: any) {
-    return this.http.post<User>(`${API_URL}/users`, newUserObj, httpOptions);
+    return this.http.post<User>(`${API_URL}/users`, newUserObj);
   }
 
   uploadUserImage(formData: any) {
@@ -84,6 +78,6 @@ export class UsersService {
   }
 
   removeUserAndData(id: number) {
-    return this.http.delete(`${API_URL}/users/${id}`, httpOptions);
+    return this.http.delete(`${API_URL}/users/${id}`);
   }
 }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { User } from '../models/user';
-import { CommentService } from './comment.service';
-import { GalleryService } from './gallery.service';
 import { UsersService } from './users.service';
 
 @Injectable({
